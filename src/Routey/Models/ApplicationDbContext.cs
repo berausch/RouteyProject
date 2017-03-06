@@ -24,5 +24,11 @@ namespace Routey.Models
             options.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=Routey;integrated security=True;");
         }
 
+        public ApplicationDbContext()
+        {
+
+        }
+
+
     }
 }
