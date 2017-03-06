@@ -3,20 +3,43 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@model IEnumerable<Routey.Models.Place>
+@model IEnumerable<Routey.Models.YelpPlace>
+
+   @{ int count = 0; }
 
 <h2>All Messages</h2>
 <hr />
 <ol>
-    @foreach (var place in Model)
+
+    
+    @foreach (var yPlace in Model)
     {
+       
+
+
+
+
         <li>
-            <ul>
-                <li>Name: @Html.DisplayFor(modelItem => place.Name)</li>
-                <li>Address1: @Html.DisplayFor(modelItem => place.Location.Address1)</li>
-                <li>Address2: @Html.DisplayFor(modelItem => place.Location.City), @Html.DisplayFor(modelItem => place.Location.State) @Html.DisplayFor(modelItem => place.Location.Zip_code)</li>
+            <ul>              
+
+                
+                <li>Name: @Html.DisplayFor(modelItem => yPlace.Name)</li>
+                <li>Address1: @Html.DisplayFor(modelItem => yPlace.Location.Address1)</li>
+                <li>Address2: @Html.DisplayFor(modelItem => yPlace.Location.City), @Html.DisplayFor(modelItem => yPlace.Location.State) @Html.DisplayFor(modelItem => yPlace.Location.Zip_code)</li>
+
+                <li>Lat: @Html.DisplayFor(modelItem => yPlace.Coordinates.Latitude)</li>
+
+                <li>Long: @Html.DisplayFor(modelItem => yPlace.Coordinates.Longitude)</li>
+
+                <li>Id: @Html.DisplayFor(modelItem => yPlace.Id)</li>
+
+
+                @Html.ActionLink("Add Me", "AddLocation", new { id = count})
+
+                
             </ul>
         </li>
+        count++;
     }
 </ol>
 

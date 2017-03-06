@@ -19,8 +19,17 @@ namespace Routey.Controllers
 
         public IActionResult GetLocations()
         {
-            var allLocations = Place.GetLocations();
+            var allLocations = YelpPlace.GetLocations();
             return View(allLocations);
+        }
+
+        public IActionResult AddLocation(int id)
+        {
+            var allLocations = YelpPlace.GetLocations();
+
+            var thisLocation = allLocations[id];
+
+            return View(thisLocation);
         }
     }
 }

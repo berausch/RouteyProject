@@ -12,11 +12,13 @@ using Newtonsoft.Json.Linq;
 namespace Routey.Models
 {
   
-    public class Place
+    public class YelpPlace
     {
         public string Name { get; set; }
-        public Locations Location { get; set; }
-        public class Locations
+        public YelpLocation Location { get; set; }
+
+        public Coordinate Coordinates { get; set; }
+        public class YelpLocation
         {
             public string Address1 { get; set; }
 
@@ -28,11 +30,17 @@ namespace Routey.Models
 
         }
 
+        public class Coordinate
+        {
+            public string Longitude;
+            public string Latitude;
+        }
+         public string Id { get; set; }
 
 
 
 
-        public static List<Place> GetLocations()
+        public static List<YelpPlace> GetLocations()
         {
             var client = new RestClient("https://api.yelp.com/v3/businesses/search?term=BestBuy&location=Portland");
             var request = new RestRequest(Method.GET);
@@ -45,7 +53,7 @@ namespace Routey.Models
                 response = await GetResponseContentAsync(client, request) as RestResponse;
             }).Wait();
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
-            var locationList = JsonConvert.DeserializeObject<List<Place>>(jsonResponse["businesses"].ToString());
+            var locationList = JsonConvert.DeserializeObject<List<YelpPlace>>(jsonResponse["businesses"].ToString());
             return locationList;
 
         }

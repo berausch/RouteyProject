@@ -213,9 +213,12 @@ C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Controllers\AccountController
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Controllers\HomeController.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\20170306181019_Initial.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\20170306181019_Initial.Designer.cs
+C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\20170306210558_AddLocation.cs
+C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\20170306210558_AddLocation.Designer.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\ApplicationDbContextModelSnapshot.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Models\ApplicationDbContext.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Models\ApplicationUser.cs
-C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Models\Place.cs
+C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Models\Location.cs
+C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Models\YelpPlace.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\ViewModels\loginViewModel.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\ViewModels\RegisterViewModel.cs

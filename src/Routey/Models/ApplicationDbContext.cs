@@ -9,6 +9,7 @@ namespace Routey.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public virtual DbSet<Location> Locations { get; set; }
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
 
@@ -16,6 +17,11 @@ namespace Routey.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            options.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=Routey;integrated security=True;");
         }
 
     }
