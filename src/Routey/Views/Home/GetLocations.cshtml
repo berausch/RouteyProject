@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Home Locations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<Routey.Models.Place>
+
+<h2>All Messages</h2>
+<hr />
+<ol>
+    @foreach (var place in Model)
+    {
+        <li>
+            <ul>
+                <li>Name: @Html.DisplayFor(modelItem => place.Name)</li>
+                <li>Address1: @Html.DisplayFor(modelItem => place.Location.Address1)</li>
+                <li>Address2: @Html.DisplayFor(modelItem => place.Location.City), @Html.DisplayFor(modelItem => place.Location.State) @Html.DisplayFor(modelItem => place.Location.Zip_code)</li>
+            </ul>
+        </li>
+    }
+</ol>
+
+@Html.ActionLink("Back home", "Index")
