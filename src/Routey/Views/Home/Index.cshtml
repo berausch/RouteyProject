@@ -3,45 +3,52 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script>
-    
-  $( function() {
-    function log( message ) {
-      $( "<div>" ).text( message ).prependTo( "#log" );
-      $( "#log" ).scrollTop( 0 );
-    }
+    $(document).ready(function () {
 
-    $( "#auto" ).autocomplete({
-        source: function (request, response) {            
-          $.ajax({
-           url: '@Url.Action("GetAuto")',
-          dataType: "json",
-          data: {
-            term: request.term
-          },
-          success: function (result) {
-              console.log(result);
 
-            response(result);
-          }
-        } );
-      },
-      minLength: 2,
-      select: function( event, ui ) {
-        log( "Selected: " + ui.item.value + " aka " + ui.item.id );
-      }
-    } );
-  } );
+        $("#auto").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetAuto")',
+                    dataType: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function (result) {
+                        console.log(result);
+
+                        response(result);
+                    }
+                });
+            },
+            minLength: 2,
+            select: function (event, ui) {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'html',
+                    data: {
+                        value: ui.item.value 
+                    },
+                    url: '@Url.Action("GetLocations")',
+                    success: function (result) {
+                        $('#log').html(result);
+                    }
+                });
+            }
+        });
+    });
 </script>
 
 
     <div class="ui-widget">
         <label for="auto">Write In: </label>
         <input id="auto">
+        
     </div>
 
     <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-        Result:
-        <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
+        Results:
+        <div id="log"></div>
     </div>
 
 

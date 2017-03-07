@@ -20,15 +20,20 @@ namespace Routey.Controllers
             return View();
         }
 
-        public IActionResult GetLocations()
+        public IActionResult GetLocations(string value)
         {
-            var allLocations = YelpPlace.GetLocations();
+            var allLocations = YelpPlace.GetLocations(value);
+            for(var i = 0; i < allLocations.Count; i++)
+            {
+                allLocations[i].YelpTerm = value;
+            }
+
             return View(allLocations);
         }
 
-        public IActionResult AddLocation(int id)
+        public IActionResult AddLocation(int id, string term)
         {
-            var allPlaces = YelpPlace.GetLocations();
+            var allPlaces = YelpPlace.GetLocations(term);
 
             var thisPlace = allPlaces[id];
             Location newLocation = new Location(thisPlace.Name, thisPlace.Location.Address1, thisPlace.Location.City, thisPlace.Location.State, thisPlace.Location.Zip_code, thisPlace.Coordinates.Latitude, thisPlace.Coordinates.Longitude, thisPlace.Id, false);
@@ -47,8 +52,11 @@ namespace Routey.Controllers
         public IActionResult GetAuto(string term)
         {
             Debug.WriteLine(term);
-            var allAuto = autoPlace.GetAutocomplete(term);
-            return Json(allAuto);
+            var allAuto1 = autoPlace.GetAutocompleteBusinesses(term);
+            var allAuto2 = autoPlace.GetAutocompleteTerms(term);
+
+            allAuto1.AddRange(allAuto2);
+            return Json(allAuto1);
         }
     }
 }

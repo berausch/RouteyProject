@@ -1,9 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Home Locations";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-@model IEnumerable<Routey.Models.YelpPlace>
+﻿@model IEnumerable<Routey.Models.YelpPlace>
 
    @{ int count = 0; }
 
@@ -34,7 +29,7 @@
                 <li>Id: @Html.DisplayFor(modelItem => yPlace.Id)</li>
 
 
-                @Html.ActionLink("Add Me", "AddLocation", new { id = count})
+                @Html.ActionLink("Add Me", "AddLocation", new { id = count, term = @yPlace.YelpTerm})
 
                 
             </ul>

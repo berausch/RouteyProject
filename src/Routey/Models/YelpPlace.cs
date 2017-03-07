@@ -15,6 +15,8 @@ namespace Routey.Models
     public class YelpPlace
     {
         public string Name { get; set; }
+
+        public string YelpTerm { get; set; }
         public YelpLocation Location { get; set; }
 
         public Coordinate Coordinates { get; set; }
@@ -40,13 +42,15 @@ namespace Routey.Models
 
 
 
-        public static List<YelpPlace> GetLocations()
+        public static List<YelpPlace> GetLocations(string userInput)
         {
-            var client = new RestClient("https://api.yelp.com/v3/businesses/search?term=BestBuy&location=Portland");
+            var client = new RestClient("https://api.yelp.com/v3/businesses/search?&location=Portland");
             var request = new RestRequest(Method.GET);
             request.AddHeader("postman-token", "af248707-3a53-4d59-a269-b10e3a1dffc6");
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("authorization", "Bearer Drh3Xrl-pkzYk-KyZtWgqtBx_uZHrbCzP7vFAnCdUydCSgdrmP1AV4_1sKKhKIuoKVqLNh9NKb0t2hPIybxt6CB9tqtShtUVguyOadwm4-t_0kI2mQSV5gtcR5O9WHYx");
+            request.AddParameter("term", userInput);
+
             var response = new RestResponse();
             Task.Run(async () =>
             {
