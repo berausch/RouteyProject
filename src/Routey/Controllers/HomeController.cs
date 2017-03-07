@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Routey.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -41,6 +42,13 @@ namespace Routey.Controllers
         public IActionResult Test()
         {
             return View();
+        }
+
+        public IActionResult GetAuto(string term)
+        {
+            Debug.WriteLine(term);
+            var allAuto = autoPlace.GetAutocomplete(term);
+            return Json(allAuto);
         }
     }
 }

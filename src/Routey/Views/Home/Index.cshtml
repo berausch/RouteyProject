@@ -2,52 +2,48 @@
     ViewData["Title"] = "Home Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script>
+    
   $( function() {
     function log( message ) {
       $( "<div>" ).text( message ).prependTo( "#log" );
       $( "#log" ).scrollTop( 0 );
     }
 
-    $("#auto").autocomplete({
-        source: function(request, response) {
-            var settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": "https://api.yelp.com/v3/autocomplete?latitude=37.786942&longitude=-122.399643&text=" + request.term,
-                "method": "GET",
-                "headers": {
-                    "authorization": "Bearer Drh3Xrl-pkzYk-KyZtWgqtBx_uZHrbCzP7vFAnCdUydCSgdrmP1AV4_1sKKhKIuoKVqLNh9NKb0t2hPIybxt6CB9tqtShtUVguyOadwm4-t_0kI2mQSV5gtcR5O9WHYx",
-                    "cache-control": "no-cache",
-                    "postman-token": "a5314559-6268-1f72-254c-321706984514"
-                }
-            }
+    $( "#auto" ).autocomplete({
+        source: function (request, response) {            
+          $.ajax({
+           url: '@Url.Action("GetAuto")',
+          dataType: "json",
+          data: {
+            term: request.term
+          },
+          success: function (result) {
+              console.log(result);
 
-            $.ajax(settings).done(function (response) {
-                console.log(response);
-            });
-        },
+            response(result);
+          }
+        } );
+      },
       minLength: 2,
       select: function( event, ui ) {
         log( "Selected: " + ui.item.value + " aka " + ui.item.id );
       }
-    });
+    } );
   } );
 </script>
-<h2>Awesome App!</h2>
-<hr />
-@Html.ActionLink("View all Locations", "GetLocations")
-<br />
+
+
+    <div class="ui-widget">
+        <label for="auto">Write In: </label>
+        <input id="auto">
+    </div>
+
+    <div class="ui-widget" style="margin-top:2em; font-family:Arial">
+        Result:
+        <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
+    </div>
 
 
 
-<h2>Type in a Business Name</h2>
-<div class="ui-widget">
-    <label for="auto">Start typing a business name to get suggestions:</label>
-    <input id="auto">
-</div>
-<div class="ui-widget" style="margin-top:2em; font-family:Arial">
-    Result:
-    <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
-</div>
+
