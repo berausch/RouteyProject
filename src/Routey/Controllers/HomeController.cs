@@ -20,12 +20,13 @@ namespace Routey.Controllers
             return View();
         }
 
-        public IActionResult GetLocations(string value)
+        public IActionResult GetLocations(string auto)
         {
-            var allLocations = YelpPlace.GetLocations(value);
+            Debug.WriteLine(auto);
+            var allLocations = YelpPlace.GetLocations(auto);
             for(var i = 0; i < allLocations.Count; i++)
             {
-                allLocations[i].YelpTerm = value;
+                allLocations[i].YelpTerm = auto;
             }
 
             return View(allLocations);

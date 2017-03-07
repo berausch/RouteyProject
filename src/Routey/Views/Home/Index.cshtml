@@ -8,6 +8,7 @@
 
         $("#auto").autocomplete({
             source: function (request, response) {
+                
                 $.ajax({
                     url: '@Url.Action("GetAuto")',
                     dataType: "json",
@@ -27,23 +28,38 @@
                     type: 'GET',
                     dataType: 'html',
                     data: {
-                        value: ui.item.value 
+                        auto: ui.item.value
                     },
                     url: '@Url.Action("GetLocations")',
                     success: function (result) {
+                        console.log(result);
                         $('#log').html(result);
                     }
                 });
             }
+        });
+        $("#auto2").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: 'GET',
+                dataType: 'html',
+                data: $(this).serialize(),
+                url: '@Url.Action("GetLocations")',
+                success: function (result) {
+                    $('#log').html(result);
+                }
+            });
         });
     });
 </script>
 
 
     <div class="ui-widget">
-        <label for="auto">Write In: </label>
-        <input id="auto">
-        
+        <form id="auto2">
+            <label for="auto">Write In: </label>
+            <input id="auto" name="auto">
+            <button type="submit">Submit</button>
+        </form>
     </div>
 
     <div class="ui-widget" style="margin-top:2em; font-family:Arial">
