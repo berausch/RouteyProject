@@ -37,5 +37,10 @@ namespace Routey.Controllers
 
             return View(thisPlace);
         }
+
+        public IActionResult Test()
+        {
+            return View();
+        }
     }
 }
