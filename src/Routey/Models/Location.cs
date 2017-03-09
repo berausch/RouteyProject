@@ -44,6 +44,14 @@ namespace Routey.Models
         {
 
         }
+        public Location(string address, string city, string state, int routeId, string locationType)
+        {
+            Address = address;
+            City = city;
+            State = state;
+            RouteId = routeId;
+            LocationType = locationType;
+        }
 
         public Location(string name, string address, string city, string state, string zip, string latitude, string longitude, string yelpId, bool save)
         {

@@ -64,5 +64,13 @@ namespace Routey.Controllers
             Debug.WriteLine(Origin);
             return Content(Origin);
         }
+
+        public IActionResult NewRoute()
+        {
+            Route newRoute = new Route();
+            db.Routes.Add(newRoute);
+            db.SaveChanges();
+            return View(newRoute);
+        }
     }
 }
