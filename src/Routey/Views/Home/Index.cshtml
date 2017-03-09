@@ -4,8 +4,27 @@
 }
 <script>
     $(document).ready(function () {
-
-
+        $("#newOrigin").hide();
+        $("#newOriginDest").hide();
+        $(".ui-widget").hide();
+        $("#originSameQ").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: 'GET',
+                data: $(this).serialize(),
+                url: '@Url.Action("OriginDestQ")',
+                success: function (result) {
+                    if(result == "true")
+                    {
+                        $("#newOrigin").show();
+                    } else if(result == "false") 
+                    {
+                        $("#newOriginDest").show(); 
+                    }
+                        
+                 }
+            });
+        });
         $("#auto").autocomplete({
             source: function (request, response) {
                 
@@ -54,12 +73,19 @@
 </script>
 
     <h3>Create a New Route!</h3>
-    <h4>Are the Origin and Destination the same?</h4>
-    <form>
+    
+    <form id="originSameQ">
+        <h4>Are the Origin and Destination the same?</h4>
+            <input type="radio"  name="origin" value="true" checked />
+        Yes
+            
 
-    </form>
+            <input type="radio" name="origin" value="false" />
+            No
+        </label> 
+            <button type="submit">Submit</button>
 
-    //If they say yes one form, if not then different form?  Need show hide....
+</form>
 
     <form id="newOrigin">
         <label for="originAddress">Street Address</label>

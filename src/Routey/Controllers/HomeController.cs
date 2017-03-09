@@ -52,12 +52,17 @@ namespace Routey.Controllers
 
         public IActionResult GetAuto(string term)
         {
-            Debug.WriteLine(term);
             var allAuto1 = autoPlace.GetAutocompleteBusinesses(term);
             var allAuto2 = autoPlace.GetAutocompleteTerms(term);
 
             allAuto1.AddRange(allAuto2);
             return Json(allAuto1);
+        }
+
+        public IActionResult OriginDestQ(string Origin)
+        {
+            Debug.WriteLine(Origin);
+            return Content(Origin);
         }
     }
 }
