@@ -10,6 +10,7 @@ namespace Routey.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public virtual DbSet<Location> Locations { get; set; }
+        public virtual DbSet<Route> Routes { get; set; }
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
 

@@ -28,6 +28,18 @@ namespace Routey.Models
 
         public bool Save { get; set; }
 
+        public int RouteId { get; set; }
+
+        //Location Types: 
+        //  W - Waypoint
+        //  O - Origin only
+        //  D - Destination only
+        //  OD - Origin is the destination as well
+
+        public string LocationType { get; set; }
+
+        public virtual Route Route { get; set; }
+
         public Location()
         {
 
