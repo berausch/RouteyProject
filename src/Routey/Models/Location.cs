@@ -29,6 +29,7 @@ namespace Routey.Models
         public bool Save { get; set; }
 
         public int RouteId { get; set; }
+        public string AddressConcat { get; set; }
 
         //Location Types: 
         //  W - Waypoint
@@ -44,16 +45,23 @@ namespace Routey.Models
         {
 
         }
-        public Location(string address, string city, string state, int routeId, string locationType)
+        public Location(string address, string city, string state, int routeId, string locationType, bool save = false)
         {
             Address = address;
             City = city;
             State = state;
             RouteId = routeId;
             LocationType = locationType;
+            Save = save;
+        }
+        public Location(string address, string city, string state)
+        {
+            Address = address;
+            City = city;
+            State = state;
         }
 
-        public Location(string name, string address, string city, string state, string zip, string latitude, string longitude, string yelpId, bool save)
+        public Location(string name, string address, string city, string state, string zip, string latitude, string longitude, string yelpId, string locationType, bool save = false)
         {
             Name = name;
             Address = address;
@@ -61,10 +69,22 @@ namespace Routey.Models
             State = state;
             Zip = zip;
             Latitude = latitude;
-            Longitude = longitude;
+            Longitude = longitude;           
             YelpId = yelpId;
+            LocationType = locationType;
             Save = save;
 
+        }
+
+        public void apiAddress()
+        {
+            string addressNoSpace = Address.Replace(" ", "+");
+            string cityNoSpace = City.Replace(" ", "+");
+            string stateNoSpace = State.Replace(" ", "+");
+            string allAddress = addressNoSpace + "+" + cityNoSpace + "+" + stateNoSpace;
+
+           AddressConcat = allAddress;
+           
         }
 
     }

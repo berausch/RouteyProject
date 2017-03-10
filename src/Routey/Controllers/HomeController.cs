@@ -20,25 +20,29 @@ namespace Routey.Controllers
             return View();
         }
 
-        public IActionResult GetLocations(string auto)
+        public IActionResult GetLocations(string auto, int routeId)
         {
             Debug.WriteLine(auto);
             var allLocations = YelpPlace.GetLocations(auto);
             for(var i = 0; i < allLocations.Count; i++)
             {
                 allLocations[i].YelpTerm = auto;
+                allLocations[i].RouteId = routeId;
             }
 
             return View(allLocations);
         }
 
-        public IActionResult AddLocation(int id, string term)
+        public IActionResult AddLocation(int id, string term, int routeId)
         {
             var allPlaces = YelpPlace.GetLocations(term);
+            string locationType = "W";
 
             var thisPlace = allPlaces[id];
-            Location newLocation = new Location(thisPlace.Name, thisPlace.Location.Address1, thisPlace.Location.City, thisPlace.Location.State, thisPlace.Location.Zip_code, thisPlace.Coordinates.Latitude, thisPlace.Coordinates.Longitude, thisPlace.Id, false);
+            Location newLocation = new Location(thisPlace.Name, thisPlace.Location.Address1, thisPlace.Location.City, thisPlace.Location.State, thisPlace.Location.Zip_code, thisPlace.Coordinates.Latitude, thisPlace.Coordinates.Longitude, thisPlace.Id, locationType);
+            newLocation.apiAddress();
 
+            newLocation.RouteId = routeId;
             db.Locations.Add(newLocation);
             db.SaveChanges();
 
@@ -72,5 +76,27 @@ namespace Routey.Controllers
             db.SaveChanges();
             return View(newRoute);
         }
+
+        public IActionResult CreateNewOrigin(string originAddress, string originCity, string originState, int routeId)
+        {
+
+
+            string locationType = "OD";
+
+            Location newLocation = new Location(originAddress, originCity, originState, routeId, locationType);
+            Debug.WriteLine(newLocation);
+            var thisGoogleLatLng = GoogleLatLng.GetLatLng(originAddress, originCity, originState);
+            newLocation.Latitude = thisGoogleLatLng.Latitude;
+            newLocation.Longitude = thisGoogleLatLng.Longitude;
+            newLocation.AddressConcat = thisGoogleLatLng.AddressConcat;
+            newLocation.Name = "Origin";
+
+            db.Locations.Add(newLocation);
+            db.SaveChanges();
+            Debug.WriteLine(newLocation);
+            return Json(newLocation);
+
+        }
+
+        }
     }
-}

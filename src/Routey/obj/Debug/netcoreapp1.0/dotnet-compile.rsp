@@ -217,10 +217,15 @@ C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\20170306181019_Ini
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\20170306181019_Initial.Designer.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\20170306210558_AddLocation.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\20170306210558_AddLocation.Designer.cs
+C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\20170309193955_AddRoute.cs
+C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\20170309193955_AddRoute.Designer.cs
+C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\20170309223056_ModelChanges.cs
+C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\20170309223056_ModelChanges.Designer.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Migrations\ApplicationDbContextModelSnapshot.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Models\ApplicationDbContext.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Models\ApplicationUser.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Models\autoPlace.cs
+C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Models\GoogleLatLng.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Models\Location.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Models\Route.cs
 C:\Users\epicodus\Desktop\RouteyProject\src\Routey\Models\YelpPlace.cs

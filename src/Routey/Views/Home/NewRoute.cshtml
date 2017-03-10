@@ -27,6 +27,8 @@
                  }
             });
         });
+
+
         $("#auto").autocomplete({
             source: function (request, response) {
                 
@@ -34,6 +36,7 @@
                     url: '@Url.Action("GetAuto")',
                     dataType: "json",
                     data: {
+                        routeId: @Model.RouteId,
                         term: request.term
                     },
                     success: function (result) {
@@ -71,6 +74,23 @@
                 }
             });
         });
+        $("#newOrigin").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                data: $(this).serialize(),
+                url: '@Url.Action("CreateNewOrigin")',
+                success: function (result) {
+                    var resultStringOrigin = "<p>Origin:</p> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
+                    console.log(result);
+                    $(".ui-widget").show();
+
+                    $('#origin').html(resultStringOrigin);
+
+                }
+            });
+        });
     });
 </script>
 
@@ -84,7 +104,6 @@
 
             <input type="radio" name="origin" value="false" />
             No
-        </label> 
             <button type="submit">Submit</button>
 
 </form>
@@ -98,7 +117,7 @@
 
         <label for="originState">State Abbreviation</label>
         <input id="originState" name="originState">
-        <input type="hidden" name="RouteId" />
+        <input type="hidden" name="routeId" value="@Model.RouteId" />
 
         <button type="submit">Submit</button>
     </form>
@@ -124,13 +143,18 @@
     <label for="destState">State Abbreviation</label>
     <input id="destState" name="destState">
 
+    <input type="hidden" name="RouteId" value="@Model.RouteId" />
+
     <button type="submit">Submit</button>
 </form>
 
+<div id="origin"></div>
+
     <div class="ui-widget">
         <form id="auto2">
-            <label for="auto">Write In: </label>
+            <label for="auto">Add an Errand Location!</label>
             <input id="auto" name="auto">
+            <input type="hidden" name="RouteId" value="@Model.RouteId" />
             <button type="submit">Submit</button>
         </form>
     </div>
@@ -139,6 +163,7 @@
         Results:
         <div id="log"></div>
     </div>
+
 
 
 

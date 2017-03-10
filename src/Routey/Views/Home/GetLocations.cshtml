@@ -29,7 +29,7 @@
                 <li>Id: @Html.DisplayFor(modelItem => yPlace.Id)</li>
 
 
-                @Html.ActionLink("Add Me", "AddLocation", new { id = count, term = @yPlace.YelpTerm})
+                @Html.ActionLink("Add Me", "AddLocation", new { id = count, term = @yPlace.YelpTerm, routeId = @yPlace.RouteId })
 
                 
             </ul>

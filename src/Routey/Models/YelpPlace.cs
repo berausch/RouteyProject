@@ -39,6 +39,8 @@ namespace Routey.Models
         }
          public string Id { get; set; }
 
+        public int RouteId { get; set; }
+
 
 
 
