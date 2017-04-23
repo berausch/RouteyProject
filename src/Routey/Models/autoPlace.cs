@@ -18,15 +18,16 @@ namespace Routey.Models
         public string text { get; set; }
 
 
-        public static List<string> GetAutocompleteBusinesses(string userInput)
+        public static List<string> GetAutocompleteBusinesses(string userInput, string lat, string lon)
         {
-            var client = new RestClient("https://api.yelp.com/v3/autocomplete?latitude=45.5206&longitude=-122.6774");
+            var client = new RestClient("https://api.yelp.com/v3/autocomplete?");
             var request = new RestRequest(Method.GET);
             request.AddHeader("postman-token", "9eec7f56-2754-d735-0518-55b8468755ef");
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("authorization", "Bearer Drh3Xrl-pkzYk-KyZtWgqtBx_uZHrbCzP7vFAnCdUydCSgdrmP1AV4_1sKKhKIuoKVqLNh9NKb0t2hPIybxt6CB9tqtShtUVguyOadwm4-t_0kI2mQSV5gtcR5O9WHYx");
-
             request.AddParameter("text", userInput);
+            request.AddParameter("latitude", lat);
+            request.AddParameter("longitude", lon);
             
             var response = new RestResponse();
             Task.Run(async () =>
@@ -42,14 +43,15 @@ namespace Routey.Models
             return autoList;
         }
 
-        public static List<string> GetAutocompleteTerms(string userInput)
+        public static List<string> GetAutocompleteTerms(string userInput, string lat, string lon)
         {
-            var client = new RestClient("https://api.yelp.com/v3/autocomplete?latitude=45.5206&longitude=-122.6774");
+            var client = new RestClient("https://api.yelp.com/v3/autocomplete?");
             var request = new RestRequest(Method.GET);
             request.AddHeader("postman-token", "9eec7f56-2754-d735-0518-55b8468755ef");
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("authorization", "Bearer Drh3Xrl-pkzYk-KyZtWgqtBx_uZHrbCzP7vFAnCdUydCSgdrmP1AV4_1sKKhKIuoKVqLNh9NKb0t2hPIybxt6CB9tqtShtUVguyOadwm4-t_0kI2mQSV5gtcR5O9WHYx");
-
+            request.AddParameter("latitude", lat);
+            request.AddParameter("longitude", lon);
             request.AddParameter("text", userInput);
 
             var response = new RestResponse();

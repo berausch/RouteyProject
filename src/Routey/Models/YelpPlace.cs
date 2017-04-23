@@ -45,14 +45,16 @@ namespace Routey.Models
 
 
 
-        public static List<YelpPlace> GetLocations(string userInput)
+        public static List<YelpPlace> GetLocations(string userInput, string lat, string lon)
         {
-            var client = new RestClient("https://api.yelp.com/v3/businesses/search?&location=Portland");
+            var client = new RestClient("https://api.yelp.com/v3/businesses/search?&");
             var request = new RestRequest(Method.GET);
             request.AddHeader("postman-token", "af248707-3a53-4d59-a269-b10e3a1dffc6");
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("authorization", "Bearer Drh3Xrl-pkzYk-KyZtWgqtBx_uZHrbCzP7vFAnCdUydCSgdrmP1AV4_1sKKhKIuoKVqLNh9NKb0t2hPIybxt6CB9tqtShtUVguyOadwm4-t_0kI2mQSV5gtcR5O9WHYx");
             request.AddParameter("term", userInput);
+            request.AddParameter("latitude", lat);
+            request.AddParameter("longitude", lon);
 
             var response = new RestResponse();
             Task.Run(async () =>

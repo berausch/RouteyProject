@@ -27,12 +27,6 @@
         <li>Address1: @Html.DisplayFor(modelItem => yPlace.Location.Address1)</li>
         <li>Address2: @Html.DisplayFor(modelItem => yPlace.Location.City), @Html.DisplayFor(modelItem => yPlace.Location.State) @Html.DisplayFor(modelItem => yPlace.Location.Zip_code)</li>
 
-        <li>Lat: @Html.DisplayFor(modelItem => yPlace.Coordinates.Latitude)</li>
-
-        <li>Long: @Html.DisplayFor(modelItem => yPlace.Coordinates.Longitude)</li>
-
-        <li>Id: @Html.DisplayFor(modelItem => yPlace.Id)</li>
-
         <form id="addThisLocation">
             <input type="hidden" name="id" value="@yPlace.Id" />
             <button type="submit">Add Me!</button>

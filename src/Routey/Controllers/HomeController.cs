@@ -29,7 +29,10 @@ namespace Routey.Controllers
 
         public IActionResult GetLocations(string auto)
         {
-            var allLocations = YelpPlace.GetLocations(auto);
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
+            var originLatitiude = thisPlace.Latitude;
+            var originLongitude = thisPlace.Longitude;
+            var allLocations = YelpPlace.GetLocations(auto, originLatitiude, originLongitude);
             for(var i = 0; i < allLocations.Count; i++)
             {
                 allLocations[i].YelpTerm = auto;
@@ -65,8 +68,8 @@ namespace Routey.Controllers
             var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
-            var allAuto1 = autoPlace.GetAutocompleteBusinesses(term);
-            var allAuto2 = autoPlace.GetAutocompleteTerms(term);
+            var allAuto1 = autoPlace.GetAutocompleteBusinesses(term, originLatitiude, originLongitude);
+            var allAuto2 = autoPlace.GetAutocompleteTerms(term, originLatitiude, originLongitude);
 
             allAuto1.AddRange(allAuto2);
             return Json(allAuto1);
