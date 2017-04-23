@@ -8,6 +8,7 @@ using RestSharp;
 using RestSharp.Authenticators;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace Routey.Models
 {
@@ -51,6 +52,7 @@ namespace Routey.Models
 
             thisLocation.Latitude = thisLat;
             thisLocation.Longitude = thisLng;
+            Debug.WriteLine(thisLocation);
 
             return thisLocation;
         }

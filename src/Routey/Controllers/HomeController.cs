@@ -12,37 +12,43 @@ using System.Diagnostics;
 
 namespace Routey.Controllers
 {
+    public static class GlobalRoute
+    {
+       public static int RouteId { get; set; }
+    }
+
     public class HomeController : Controller
     {
+        
+
         private ApplicationDbContext db = new ApplicationDbContext();
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult GetLocations(string auto, int routeId)
+        public IActionResult GetLocations(string auto)
         {
-            Debug.WriteLine(auto);
             var allLocations = YelpPlace.GetLocations(auto);
             for(var i = 0; i < allLocations.Count; i++)
             {
                 allLocations[i].YelpTerm = auto;
-                allLocations[i].RouteId = routeId;
+                
             }
 
             return View(allLocations);
         }
 
-        public IActionResult AddLocation(int id, string term, int routeId)
+        public IActionResult AddLocation(string id)
         {
-            var allPlaces = YelpPlace.GetLocations(term);
+            var thisPlace = YelpPlace.AddLocation(id);
             string locationType = "W";
-
-            var thisPlace = allPlaces[id];
+         
+            thisPlace.RouteId = GlobalRoute.RouteId;
             Location newLocation = new Location(thisPlace.Name, thisPlace.Location.Address1, thisPlace.Location.City, thisPlace.Location.State, thisPlace.Location.Zip_code, thisPlace.Coordinates.Latitude, thisPlace.Coordinates.Longitude, thisPlace.Id, locationType);
             newLocation.apiAddress();
 
-            newLocation.RouteId = routeId;
+            newLocation.RouteId = GlobalRoute.RouteId;
             db.Locations.Add(newLocation);
             db.SaveChanges();
 
@@ -71,32 +77,30 @@ namespace Routey.Controllers
 
         public IActionResult NewRoute()
         {
+
             Route newRoute = new Route();
             db.Routes.Add(newRoute);
             db.SaveChanges();
+
+            GlobalRoute.RouteId = newRoute.RouteId;
+            var checkGlobal = GlobalRoute.RouteId;
             return View(newRoute);
         }
 
-        public IActionResult CreateNewOrigin(string originAddress, string originCity, string originState, int routeId)
+        public IActionResult CreateNewOrigin(string originAddress, string originCity, string originState)
         {
 
-
-            string locationType = "OD";
-
-            Location newLocation = new Location(originAddress, originCity, originState, routeId, locationType);
-            Debug.WriteLine(newLocation);
-            var thisGoogleLatLng = GoogleLatLng.GetLatLng(originAddress, originCity, originState);
-            newLocation.Latitude = thisGoogleLatLng.Latitude;
-            newLocation.Longitude = thisGoogleLatLng.Longitude;
-            newLocation.AddressConcat = thisGoogleLatLng.AddressConcat;
+            string locationType = "OD"; 
+            var newLocation = GoogleLatLng.GetLatLng(originAddress, originCity, originState);
+            newLocation.LocationType = locationType;
+            newLocation.RouteId = GlobalRoute.RouteId;
             newLocation.Name = "Origin";
 
             db.Locations.Add(newLocation);
             db.SaveChanges();
             Debug.WriteLine(newLocation);
             return Json(newLocation);
-
         }
 
-        }
     }
+}

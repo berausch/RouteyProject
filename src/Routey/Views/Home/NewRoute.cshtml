@@ -19,11 +19,14 @@
                     if(result == "true")
                     {
                         $("#newOrigin").show();
-                    } else if(result == "false") 
+                        $("#newOriginDest").hide();
+
+                    } else if(result == "false")
                     {
-                        $("#newOriginDest").show(); 
+                        $("#newOriginDest").show();
+                        $("#newOrigin").hide();
                     }
-                        
+
                  }
             });
         });
@@ -31,7 +34,7 @@
 
         $("#auto").autocomplete({
             source: function (request, response) {
-                
+
                 $.ajax({
                     url: '@Url.Action("GetAuto")',
                     dataType: "json",
@@ -40,9 +43,7 @@
                         term: request.term
                     },
                     success: function (result) {
-                        console.log(result);
-
-                        response(result);
+                       response(result);
                     }
                 });
             },
@@ -74,6 +75,7 @@
                 }
             });
         });
+        
         $("#newOrigin").submit(function (event) {
             event.preventDefault();
             $.ajax({
@@ -94,14 +96,12 @@
     });
 </script>
 
-    <h3>Create a New Route!</h3>
+    <h3>You have created a new route</h3>
     
     <form id="originSameQ">
         <h4>Are the Origin and Destination the same?</h4>
             <input type="radio"  name="origin" value="true" checked />
-        Yes
-            
-
+            Yes
             <input type="radio" name="origin" value="false" />
             No
             <button type="submit">Submit</button>
@@ -110,14 +110,13 @@
 
     <form id="newOrigin">
         <label for="originAddress">Street Address</label>
-        <input id="originAddress" name="originAddress">
+        <input id="originAddress" name="originAddress" value="9941 SW 37th Ave">
 
         <label for="originCity">City</label>
-        <input id="originCity" name="originCity">
+        <input id="originCity" name="originCity" value="Portland">
 
         <label for="originState">State Abbreviation</label>
-        <input id="originState" name="originState">
-        <input type="hidden" name="routeId" value="@Model.RouteId" />
+        <input id="originState" name="originState" value="or">
 
         <button type="submit">Submit</button>
     </form>
@@ -143,18 +142,16 @@
     <label for="destState">State Abbreviation</label>
     <input id="destState" name="destState">
 
-    <input type="hidden" name="RouteId" value="@Model.RouteId" />
-
     <button type="submit">Submit</button>
 </form>
 
 <div id="origin"></div>
+<div id="route"></div>
 
     <div class="ui-widget">
         <form id="auto2">
             <label for="auto">Add an Errand Location!</label>
             <input id="auto" name="auto">
-            <input type="hidden" name="RouteId" value="@Model.RouteId" />
             <button type="submit">Submit</button>
         </form>
     </div>

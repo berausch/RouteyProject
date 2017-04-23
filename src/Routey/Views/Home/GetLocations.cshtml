@@ -1,23 +1,32 @@
 ﻿@model IEnumerable<Routey.Models.YelpPlace>
 
-   @{ int count = 0; }
-
-
+<script>
+    $(document).ready(function () {
+    $("#addThisLocation").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: 'GET',
+                dataType: 'html',
+                data: $(this).serialize(),
+                url: '@Url.Action("AddLocation")',
+                success: function (result) {
+                    $("#log").hide();
+                $('#route').html(result);
+                }
+            });
+        });
+    });
+</script>
 <hr />
-<ol>
 
-    
+
     @foreach (var yPlace in Model)
     {
-       
 
 
 
 
-        <li>
-            <ul>              
 
-                
                 <li>Name: @Html.DisplayFor(modelItem => yPlace.Name)</li>
                 <li>Address1: @Html.DisplayFor(modelItem => yPlace.Location.Address1)</li>
                 <li>Address2: @Html.DisplayFor(modelItem => yPlace.Location.City), @Html.DisplayFor(modelItem => yPlace.Location.State) @Html.DisplayFor(modelItem => yPlace.Location.Zip_code)</li>
@@ -29,13 +38,13 @@
                 <li>Id: @Html.DisplayFor(modelItem => yPlace.Id)</li>
 
 
-                @Html.ActionLink("Add Me", "AddLocation", new { id = count, term = @yPlace.YelpTerm, routeId = @yPlace.RouteId })
+                <form id="addThisLocation">
+                    <input type="hidden" name="Id" value="@yPlace.Id" />
+                    <button type="submit">Add Me!</button>
+                </form>
 
-                
-            </ul>
-        </li>
-        count++;
+
     }
-</ol>
+
 
 @Html.ActionLink("Back home", "Index")

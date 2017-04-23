@@ -1,16 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A02D39D1-72E8-4EA6-B1DE-E13EECEB5E90}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{44A5B2EC-9A01-44FF-9ABE-511B52FA10D3}"
 	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
 		src\Routey\Views\Home\GoogleApiTest = src\Routey\Views\Home\GoogleApiTest
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Routey", "src\Routey\Routey.csproj", "{9405C6ED-0E10-48CF-AB62-B0F2BAAD896E}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Routey", "src\Routey\Routey.xproj", "{9405C6ED-0E10-48CF-AB62-B0F2BAAD896E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
