@@ -39,7 +39,6 @@
                     url: '@Url.Action("GetAuto")',
                     dataType: "json",
                     data: {
-                        routeId: @Model.RouteId,
                         term: request.term
                     },
                     success: function (result) {
@@ -57,7 +56,7 @@
                     },
                     url: '@Url.Action("GetLocations")',
                     success: function (result) {
-                        console.log(result);
+                        $("#log").show();
                         $('#log').html(result);
                     }
                 });
@@ -71,6 +70,7 @@
                 data: $(this).serialize(),
                 url: '@Url.Action("GetLocations")',
                 success: function (result) {
+                    $("#log").show();
                     $('#log').html(result);
                 }
             });

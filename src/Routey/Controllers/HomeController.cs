@@ -62,6 +62,9 @@ namespace Routey.Controllers
 
         public IActionResult GetAuto(string term)
         {
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
+            var originLatitiude = thisPlace.Latitude;
+            var originLongitude = thisPlace.Longitude;
             var allAuto1 = autoPlace.GetAutocompleteBusinesses(term);
             var allAuto2 = autoPlace.GetAutocompleteTerms(term);
 
