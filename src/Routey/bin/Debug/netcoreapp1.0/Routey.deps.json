@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.0",
-    "signature": "23a88de086a45ca8113b99e6e008a5fd7f8c9b15"
+    "signature": "d1eaf1af6c02f88c9e0de91aa08180ec9788942e"
   },
   "compilationOptions": {
     "defines": [
@@ -23,6 +23,7 @@
     ".NETCoreApp,Version=v1.0": {
       "routey/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore": "1.0.4",
           "Microsoft.AspNetCore.Diagnostics": "1.0.2",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.2",
           "Microsoft.AspNetCore.Mvc": "1.0.3",
@@ -30,13 +31,17 @@
           "Microsoft.AspNetCore.Mvc.Cors": "1.1.2",
           "Microsoft.AspNetCore.Server.IISIntegration": "1.0.2",
           "Microsoft.AspNetCore.Server.Kestrel": "1.0.3",
+          "Microsoft.AspNetCore.StaticFiles": "1.0.2",
           "Microsoft.EntityFrameworkCore": "1.0.3",
+          "Microsoft.EntityFrameworkCore.Design": "1.0.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "1.0.3",
+          "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.0.3",
           "Microsoft.EntityFrameworkCore.Tools": "1.0.0",
           "Microsoft.Extensions.Configuration.FileExtensions": "1.0.2",
           "Microsoft.Extensions.Configuration.Json": "1.0.2",
           "Microsoft.Extensions.Logging.Console": "1.0.2",
           "Microsoft.NETCore.App": "1.0.4",
+          "Microsoft.VisualStudio.Web.BrowserLink": "1.0.1",
           "RestSharp.NetCore": "105.2.3"
         },
         "runtime": {
@@ -44,6 +49,22 @@
         },
         "compile": {
           "Routey.dll": {}
+        }
+      },
+      "microsoft.aspnetcore/1.0.4": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Diagnostics": "1.0.2",
+          "Microsoft.AspNetCore.Hosting": "1.0.2",
+          "Microsoft.AspNetCore.Routing": "1.1.1",
+          "Microsoft.AspNetCore.Server.IISIntegration": "1.0.2",
+          "Microsoft.AspNetCore.Server.Kestrel": "1.0.3",
+          "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.2",
+          "Microsoft.Extensions.Configuration.FileExtensions": "1.0.2",
+          "Microsoft.Extensions.Configuration.Json": "1.0.2",
+          "Microsoft.Extensions.Logging": "1.0.2",
+          "Microsoft.Extensions.Logging.Console": "1.0.2",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.2",
+          "NETStandard.Library": "1.6.1"
         }
       },
       "microsoft.aspnetcore.antiforgery/1.0.3": {
@@ -740,6 +761,21 @@
           "lib/netstandard1.3/Microsoft.AspNetCore.Server.Kestrel.dll": {}
         }
       },
+      "microsoft.aspnetcore.staticfiles/1.0.2": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.1",
+          "Microsoft.AspNetCore.Http.Extensions": "1.1.1",
+          "Microsoft.Extensions.FileProviders.Abstractions": "1.1.0",
+          "Microsoft.Extensions.Logging.Abstractions": "1.1.1",
+          "Microsoft.Extensions.WebEncoders": "1.0.2"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.AspNetCore.StaticFiles.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.AspNetCore.StaticFiles.dll": {}
+        }
+      },
       "microsoft.aspnetcore.webutilities/1.1.1": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "1.1.0",
@@ -876,6 +912,18 @@
           "lib/netstandard1.3/Microsoft.EntityFrameworkCore.SqlServer.dll": {}
         }
       },
+      "microsoft.entityframeworkcore.sqlserver.design/1.0.3": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational.Design": "1.0.3",
+          "Microsoft.EntityFrameworkCore.SqlServer": "1.0.3"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.EntityFrameworkCore.SqlServer.Design.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.EntityFrameworkCore.SqlServer.Design.dll": {}
+        }
+      },
       "microsoft.entityframeworkcore.tools/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Design": "1.0.3"
@@ -938,6 +986,18 @@
         },
         "compile": {
           "lib/netstandard1.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
+        }
+      },
+      "microsoft.extensions.configuration.binder/1.0.2": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "1.0.2",
+          "System.ComponentModel.TypeConverter": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.Extensions.Configuration.Binder.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.1/Microsoft.Extensions.Configuration.Binder.dll": {}
         }
       },
       "microsoft.extensions.configuration.environmentvariables/1.0.2": {
@@ -1184,6 +1244,20 @@
           "lib/netstandard1.0/Microsoft.Extensions.Options.dll": {}
         }
       },
+      "microsoft.extensions.options.configurationextensions/1.0.2": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "1.1.1",
+          "Microsoft.Extensions.Configuration.Binder": "1.0.2",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.1.0",
+          "Microsoft.Extensions.Options": "1.1.1"
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.Extensions.Options.ConfigurationExtensions.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.1/Microsoft.Extensions.Options.ConfigurationExtensions.dll": {}
+        }
+      },
       "microsoft.extensions.platformabstractions/1.1.0": {
         "dependencies": {
           "NETStandard.Library": "1.6.1",
@@ -1237,6 +1311,24 @@
       },
       "microsoft.netcore.platforms/1.1.0": {},
       "microsoft.netcore.targets/1.1.0": {},
+      "microsoft.visualstudio.web.browserlink/1.0.1": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.1",
+          "Microsoft.AspNetCore.Http.Abstractions": "1.1.1",
+          "Microsoft.AspNetCore.Http.Extensions": "1.1.1",
+          "Microsoft.Extensions.FileProviders.Physical": "1.0.1",
+          "System.Diagnostics.Tools": "4.3.0",
+          "System.IO.MemoryMappedFiles": "4.0.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.Sockets": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.5/Microsoft.VisualStudio.Web.BrowserLink.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.5/Microsoft.VisualStudio.Web.BrowserLink.dll": {}
+        }
+      },
       "microsoft.win32.primitives/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -3514,6 +3606,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "microsoft.aspnetcore/1.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-aqRZ/TrYstCRZsCRrINmMq6A3QCMBja2aJ9DyMXGaVkexJLPpVAyYbzj4ckRIxC7hPWxonfERxOp3Zn5clK/zQ==",
+      "path": "microsoft.aspnetcore/1.0.4",
+      "hashPath": "microsoft.aspnetcore.1.0.4.nupkg.sha512"
+    },
     "microsoft.aspnetcore.antiforgery/1.0.3": {
       "type": "package",
       "serviceable": true,
@@ -3815,6 +3914,13 @@
       "path": "microsoft.aspnetcore.server.kestrel/1.0.3",
       "hashPath": "microsoft.aspnetcore.server.kestrel.1.0.3.nupkg.sha512"
     },
+    "microsoft.aspnetcore.staticfiles/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PihyNgzayyefJedzUtKUjw4w2UdVfqADuUKzd7bxnuOm2SRRR2LWANZCHXQJ4Em576zRbdcwc+ET+GKiETpNlw==",
+      "path": "microsoft.aspnetcore.staticfiles/1.0.2",
+      "hashPath": "microsoft.aspnetcore.staticfiles.1.0.2.nupkg.sha512"
+    },
     "microsoft.aspnetcore.webutilities/1.1.1": {
       "type": "package",
       "serviceable": true,
@@ -3871,6 +3977,13 @@
       "path": "microsoft.entityframeworkcore.sqlserver/1.0.3",
       "hashPath": "microsoft.entityframeworkcore.sqlserver.1.0.3.nupkg.sha512"
     },
+    "microsoft.entityframeworkcore.sqlserver.design/1.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-s5N7JsMzoqv2m9ffe8UoCJzG0g0lFhBIBgf5Ge/zaxhz7wP/K9Zos97/bbbWMZsXT4kzgo3IOWY664ri4H2wuA==",
+      "path": "microsoft.entityframeworkcore.sqlserver.design/1.0.3",
+      "hashPath": "microsoft.entityframeworkcore.sqlserver.design.1.0.3.nupkg.sha512"
+    },
     "microsoft.entityframeworkcore.tools/1.0.0": {
       "type": "package",
       "serviceable": true,
@@ -3905,6 +4018,13 @@
       "sha512": "sha512-G1ZdqjdRsPkJHZCnvhLAtsyAMxxAMsf3IPHxOD9xDc09qZa+vL4jto1gg30a9q6sn0CVJyJ/85Qt+L9PR8tWKQ==",
       "path": "microsoft.extensions.configuration.abstractions/1.1.1",
       "hashPath": "microsoft.extensions.configuration.abstractions.1.1.1.nupkg.sha512"
+    },
+    "microsoft.extensions.configuration.binder/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-UVHsL/WShjOgMiI8fhZGStBvYYPH0OSgChIvX7e9dHQFfcnGAYQrnGqJ1EIcjc4mMCx74x1krzHfHuZBSVhiyw==",
+      "path": "microsoft.extensions.configuration.binder/1.0.2",
+      "hashPath": "microsoft.extensions.configuration.binder.1.0.2.nupkg.sha512"
     },
     "microsoft.extensions.configuration.environmentvariables/1.0.2": {
       "type": "package",
@@ -4032,6 +4152,13 @@
       "path": "microsoft.extensions.options/1.1.1",
       "hashPath": "microsoft.extensions.options.1.1.1.nupkg.sha512"
     },
+    "microsoft.extensions.options.configurationextensions/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-F5+JEyV7JpdCz10C5CD9BSmxb9RFvTjmCiXIV1nAYIO6Fp3NcsmhlIaLVMdtXm9bFjH8+QXPwlZLrvCseFDWQg==",
+      "path": "microsoft.extensions.options.configurationextensions/1.0.2",
+      "hashPath": "microsoft.extensions.options.configurationextensions.1.0.2.nupkg.sha512"
+    },
     "microsoft.extensions.platformabstractions/1.1.0": {
       "type": "package",
       "serviceable": true,
@@ -4073,6 +4200,13 @@
       "sha512": "sha512-aOZA3BWfz9RXjpzt0sRJJMjAscAUm3Hoa4UWAfceV9UTYxgwZ1lZt5nO2myFf+/jetYQo4uTP7zS8sJY67BBxg==",
       "path": "microsoft.netcore.targets/1.1.0",
       "hashPath": "microsoft.netcore.targets.1.1.0.nupkg.sha512"
+    },
+    "microsoft.visualstudio.web.browserlink/1.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4sjJwlB36pd5LjZSQ8+cSbju+ZSCmXheMl+EzCWdS9ud0owMDrhF4k5Wf2aEDWEWtceaSthkKKIVIrmYhUOORw==",
+      "path": "microsoft.visualstudio.web.browserlink/1.0.1",
+      "hashPath": "microsoft.visualstudio.web.browserlink.1.0.1.nupkg.sha512"
     },
     "microsoft.win32.primitives/4.3.0": {
       "type": "package",
