@@ -9,6 +9,7 @@
         $("#newOrigin").hide();
         $("#newOriginDest").hide();
         $(".ui-widget").hide();
+        $(".ui-widgetb").hide();
         $("#originSameQ").submit(function (event) {
             event.preventDefault();
             $.ajax({
@@ -75,7 +76,7 @@
                 }
             });
         });
-        
+
         $("#newOrigin").submit(function (event) {
             event.preventDefault();
             $.ajax({
@@ -87,9 +88,56 @@
                     var resultStringOrigin = "<p>Origin:</p> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
                     console.log(result);
                     $(".ui-widget").show();
+                    $(".ui-widgetb").show();
 
                     $('#origin').html(resultStringOrigin);
 
+                }
+            });
+        });
+
+         $("#autob").autocomplete({
+            source: function (request, response) {
+
+                $.ajax({
+                    url: '@Url.Action("GetGoogleAuto")',
+                    dataType: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function (result) {
+                       response(result);
+                    }
+                });
+            },
+            minLength: 2,
+            select: function (event, ui) {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        auto: ui.item.value
+                    },
+                    url: '@Url.Action("SetGoogleAddress")',
+                    success: function (result) {
+                        var resultString = "<p>Errand Address:</p> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
+                        $("#log").show();
+                        $('#log').html(resultString);
+                    }
+                });
+            }
+        });
+        $("#auto2b").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                data: $(this).serialize(),
+                url: '@Url.Action("SetGoogleAddress")',
+                success: function (result) {
+                    var resultString = "<p>Errand Address:</p> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
+                    $("#log").show();
+                    $('#log').html(resultString);
                 }
             });
         });
@@ -110,13 +158,13 @@
 
     <form id="newOrigin">
         <label for="originAddress">Street Address</label>
-        <input id="originAddress" name="originAddress">
+        <input id="originAddress" name="originAddress" value="2315 SE Ankeny st">
 
         <label for="originCity">City</label>
-        <input id="originCity" name="originCity">
+        <input id="originCity" name="originCity" value="Portland">
 
         <label for="originState">State Abbreviation</label>
-        <input id="originState" name="originState">
+        <input id="originState" name="originState" value="OR">
 
         <button type="submit">Submit</button>
     </form>
@@ -155,6 +203,13 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+<div class="ui-widgetb">
+    <form id="auto2b">
+        <label for="autob">Add an Address Stop!</label>
+        <input id="autob" name="autob">
+        <button type="submit">Submit</button>
+    </form>
+</div>
 
     <div class="ui-widget" style="margin-top:2em; font-family:Arial">
         Results:

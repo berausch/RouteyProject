@@ -27,14 +27,20 @@ namespace Routey.Models
             public string secondary_text { get; set; }
         }
 
-        public static List<string> GetGoogleAddress(string userInput, string lat, string lon)
+        public string City { get; set; }
+        public string State { get; set; }
+
+
+        public static Location GetGoogleAddress(string userInput, string lat, string lon)
         {
-            var client = new RestClient("https://maps.googleapis.com/maps/api/place/autocomplete/json?input=2315");
+            var client = new RestClient("https://maps.googleapis.com/maps/api/place/autocomplete/json?");
             var request = new RestRequest(Method.GET);
             request.AddHeader("postman-token", "d35742c7-3445-607f-20ec-1a1ec565cc0b");
             request.AddHeader("cache-control", "no-cache");
             request.AddParameter("input", userInput);
             request.AddParameter("location", lat+","+lon);
+            request.AddParameter("key", "AIzaSyBniQDIBB4eoG7DLjs29N0Hm2bZRiJJrVA");
+
 
             var response = new RestResponse();
             Task.Run(async () =>
@@ -42,11 +48,37 @@ namespace Routey.Models
                 response = await GetResponseContentAsync(client, request) as RestResponse;
             }).Wait();
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
-            var autoGoogleList = JsonConvert.DeserializeObject<List<string>>(jsonResponse["predictions"].ToString());
+            var autoGoogleList = JsonConvert.DeserializeObject<List<GoogleAuto>>(jsonResponse["predictions"].ToString());
+
+            var secondLine = autoGoogleList[0].structured_formatting.secondary_text.Split(',');
+            Location thisLocation = new Location(autoGoogleList[0].structured_formatting.main_text, secondLine[0], secondLine[1].Remove(0, 1));
+
+            return thisLocation;
+        }
+
+        public static List<string> GetGoogleAddressAuto(string userInput, string lat, string lon)
+        {
+            var client = new RestClient("https://maps.googleapis.com/maps/api/place/autocomplete/json?");
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("postman-token", "d35742c7-3445-607f-20ec-1a1ec565cc0b");
+            request.AddHeader("cache-control", "no-cache");
+            request.AddParameter("input", userInput);
+            request.AddParameter("location", lat + "," + lon);
+            request.AddParameter("key", "AIzaSyBniQDIBB4eoG7DLjs29N0Hm2bZRiJJrVA");
 
 
+            var response = new RestResponse();
+            Task.Run(async () =>
+            {
+                response = await GetResponseContentAsync(client, request) as RestResponse;
+            }).Wait();
+            JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
+            var autoGoogleList = JsonConvert.DeserializeObject<List<GoogleAuto>>(jsonResponse["predictions"].ToString());
 
-            return autoGoogleList;
+            List<string> autoList = autoGoogleList.Select(s => s.Description).ToList();
+
+            Debug.WriteLine(response);
+            return autoList;
         }
 
         public static Task<IRestResponse> GetResponseContentAsync(RestClient theClient, RestRequest theRequest)

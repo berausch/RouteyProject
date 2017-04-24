@@ -75,6 +75,36 @@ namespace Routey.Controllers
             return Json(allAuto1);
         }
 
+        public IActionResult GetGoogleAuto(string term)
+        {
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
+            var originLatitiude = thisPlace.Latitude;
+            var originLongitude = thisPlace.Longitude;
+            var allAuto = GoogleAuto.GetGoogleAddressAuto(term, originLatitiude, originLongitude);
+            Debug.WriteLine(allAuto);
+            return Json(allAuto);
+        }
+
+        public IActionResult SetGoogleAddress(string auto)
+        {
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
+            var originLatitiude = thisPlace.Latitude;
+            var originLongitude = thisPlace.Longitude;
+            var thisLocation = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude);
+            var newLocation = GoogleLatLng.GetLatLng(thisLocation.Address, thisLocation.City, thisLocation.State);
+            newLocation.RouteId = GlobalRoute.RouteId;
+            newLocation.LocationType = "W";
+
+            db.Locations.Add(newLocation);
+            db.SaveChanges();
+
+            Debug.WriteLine(newLocation);
+            return Json(newLocation);
+        }
+
+
+        
+
         public IActionResult OriginDestQ(string Origin)
         {
             Debug.WriteLine(Origin);

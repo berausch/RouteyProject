@@ -31,6 +31,8 @@ namespace Routey.Models
         public int RouteId { get; set; }
         public string AddressConcat { get; set; }
 
+
+
         //Location Types: 
         //  W - Waypoint
         //  O - Origin only
@@ -86,6 +88,7 @@ namespace Routey.Models
            AddressConcat = allAddress;
            
         }
+
 
     }
 
