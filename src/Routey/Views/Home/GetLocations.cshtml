@@ -2,6 +2,17 @@
 
 <script>
     $(document).ready(function () {
+        $("#modal1").dialog({
+            resizable: true,
+            height: 600,
+            width: 500,
+            modal: true,
+            close: function ()
+            { 
+                $(this).dialog("destroy");
+            }
+        });
+        $('#modal1').dialog('open');
     $("#addThisLocation").submit(function (event) {
             event.preventDefault();
             $.ajax({
@@ -10,6 +21,7 @@
                 data: $(this).serialize(),
                 url: '@Url.Action("AddLocation")',
                 success: function (result) {
+                    $('#modal1').dialog('destroy');
                     $("#log").hide();
                 $('#route').append(result);
                 }
@@ -18,18 +30,20 @@
     });
 </script>
 <hr />
+<div id="modal1">
 
+        @foreach (var yPlace in Model)
+        {
 
-    @foreach (var yPlace in Model)
-    {
+            <li>Name: @Html.DisplayFor(modelItem => yPlace.Name)</li>
+            <li>Address1: @Html.DisplayFor(modelItem => yPlace.Location.Address1)</li>
+            <li>Address2: @Html.DisplayFor(modelItem => yPlace.Location.City), @Html.DisplayFor(modelItem => yPlace.Location.State) @Html.DisplayFor(modelItem => yPlace.Location.Zip_code)</li>
 
-        <li>Name: @Html.DisplayFor(modelItem => yPlace.Name)</li>
-        <li>Address1: @Html.DisplayFor(modelItem => yPlace.Location.Address1)</li>
-        <li>Address2: @Html.DisplayFor(modelItem => yPlace.Location.City), @Html.DisplayFor(modelItem => yPlace.Location.State) @Html.DisplayFor(modelItem => yPlace.Location.Zip_code)</li>
+            <form id="addThisLocation">
+                <input type="hidden" name="id" value="@yPlace.Id" />
+                <button type="submit">Add Me!</button>
+            </form>
 
-        <form id="addThisLocation">
-            <input type="hidden" name="id" value="@yPlace.Id" />
-            <button type="submit">Add Me!</button>
-        </form>
+        }
+ </div>
 
-    }

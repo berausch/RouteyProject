@@ -39,7 +39,7 @@ namespace Routey.Controllers
                 
             }
 
-            return View(allLocations);
+            return PartialView(allLocations);
         }
 
         public IActionResult AddLocation(string id)

@@ -71,6 +71,7 @@
                 data: $(this).serialize(),
                 url: '@Url.Action("GetLocations")',
                 success: function (result) {
+                    console.log(result);
                     $("#log").show();
                     $('#log').html(result);
                 }
@@ -200,7 +201,7 @@
         <form id="auto2">
             <label for="auto">Add an Errand Business Stop!</label>
             <input id="auto" name="auto">
-            <button type="submit">Submit</button>
+            <button data-target="modal1" type="submit">Submit</button>
         </form>
     </div>
 <div class="ui-widgetb">
