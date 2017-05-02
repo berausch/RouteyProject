@@ -1,8 +1,9 @@
 ﻿
 @model Routey.Models.YelpPlace
 
-
-<li>Name: @Html.DisplayFor(model => model.Name)</li>
-<li>Address1: @Html.DisplayFor(model => model.Location.Address1)</li>
-<li>Address2: @Html.DisplayFor(model => model.Location.City), @Html.DisplayFor(model => model.Location.State) @Html.DisplayFor(model => model.Location.Zip_code)</li>
-
+<div>
+    <p>@Html.DisplayFor(model => model.Name)</p>
+    <p>@Html.DisplayFor(model => model.Location.Address1)</p>
+    <p>@Html.DisplayFor(model => model.Location.City), @Html.DisplayFor(model => model.Location.State) @Html.DisplayFor(model => model.Location.Zip_code)</p>
+</div>
+<hr />
