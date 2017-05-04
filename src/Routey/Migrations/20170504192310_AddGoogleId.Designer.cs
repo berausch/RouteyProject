@@ -8,9 +8,10 @@ using Routey.Models;
 namespace Routey.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170504192310_AddGoogleId")]
+    partial class AddGoogleId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.3")
@@ -180,8 +181,6 @@ namespace Routey.Migrations
                     b.Property<string>("Address");
 
                     b.Property<string>("AddressConcat");
-
-                    b.Property<string>("AddressDisplay");
 
                     b.Property<string>("City");
 

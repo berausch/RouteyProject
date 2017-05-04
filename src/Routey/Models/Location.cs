@@ -31,7 +31,8 @@ namespace Routey.Models
         public int RouteId { get; set; }
         public string AddressConcat { get; set; }
 
-
+        public string GoogleId { get; set; }
+        public string AddressDisplay { get; set; }
 
         //Location Types: 
         //  W - Waypoint
@@ -61,6 +62,21 @@ namespace Routey.Models
             Address = address;
             City = city;
             State = state;
+        }
+
+        public Location(string address, string city, string state, string googleId)
+        {
+            Address = address;
+            City = city;
+            State = state;
+            GoogleId = googleId;
+        }
+
+
+        public Location(string addressDisplay, string googleId)
+        {
+            AddressDisplay = addressDisplay;
+            GoogleId = googleId;
         }
 
         public Location(string name, string address, string city, string state, string zip, string latitude, string longitude, string yelpId, string locationType, bool save = false)

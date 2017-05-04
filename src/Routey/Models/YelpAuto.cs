@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Routey.Models
 {
-    public class autoPlace
+    public class YelpAuto
     {
         public string Name { get; set; }
 
@@ -35,7 +35,7 @@ namespace Routey.Models
                 response = await GetResponseContentAsync(client, request) as RestResponse;
             }).Wait();
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
-            var autoList1 = JsonConvert.DeserializeObject<List<autoPlace>>(jsonResponse["businesses"].ToString());
+            var autoList1 = JsonConvert.DeserializeObject<List<YelpAuto>>(jsonResponse["businesses"].ToString());
 
 
             List<string> autoList = autoList1.Select(s => s.Name).ToList();
@@ -60,7 +60,7 @@ namespace Routey.Models
                 response = await GetResponseContentAsync(client, request) as RestResponse;
             }).Wait();
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
-            var autoList1 = JsonConvert.DeserializeObject<List<autoPlace>>(jsonResponse["terms"].ToString());
+            var autoList1 = JsonConvert.DeserializeObject<List<YelpAuto>>(jsonResponse["terms"].ToString());
 
 
             List<string> autoList = autoList1.Select(s => s.text).ToList();

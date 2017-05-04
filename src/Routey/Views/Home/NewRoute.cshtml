@@ -8,6 +8,7 @@
     $(document).ready(function () {
         $(".ui-widget").hide();
         $(".ui-widgetb").hide();
+        $(".noResult").hide();
         $("#route").hide();
         @*$("#originSameQ").submit(function (event) {
             event.preventDefault();
@@ -106,7 +107,17 @@
                         term: request.term
                     },
                     success: function (result) {
-                       response(result);
+                        console.log(result);
+                        if (result.length === 0) {
+                            $(".noResult").show();
+                            $(".submitErrand").hide();
+                            console.log(result);
+                        }
+                        else {
+                            $(".submitErrand").show();
+                            response(result);
+                        }
+                       
                     }
                 });
             },
@@ -135,26 +146,35 @@
                 data: $(this).serialize(),
                 url: '@Url.Action("SetGoogleAddress")',
                 success: function (result) {
-                    var resultString = "<p>Errand Address:</p> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
-                    $("#log").show();
-                    $('#log').html(resultString);
+                    if (result == false)
+                    {
+                        $('#log').append("No Location Found...");
+
+                    }
+                    else {
+                        var resultString = "<p>Errand Address:</p> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
+                        $("#log").show();
+                        $('#log').html(resultString);
+
+                    }
+                    
                 }
             });
         });
     });
 </script>
-    
+<div class="container">
     @*<form id="originSameQ">
-        <h4>Are the Origin and Destination the same?</h4>
-            <input type="radio"  name="origin" value="true" checked />
-            Yes
-            <input type="radio" name="origin" value="false" />
-            No
-            <button type="submit">Submit</button>
+            <h4>Are the Origin and Destination the same?</h4>
+                <input type="radio"  name="origin" value="true" checked />
+                Yes
+                <input type="radio" name="origin" value="false" />
+                No
+                <button type="submit">Submit</button>
 
-    </form>*@
+        </form>*@
 
-<h3>Create a Starting Point</h3>
+    <h3>Create a Starting Point</h3>
     <form id="newOrigin">
         <label for="originAddress">Street Address</label>
         <input id="originAddress" name="originAddress" value="2315 SE Ankeny st">
@@ -168,54 +188,59 @@
         <button type="submit">Submit</button>
     </form>
 
-@*<form id="newOriginDest">
-    <h5>Origin</h5>
-    <label for="originAddress">Street Address</label>
-    <input id="originAddress" name="originAddress">
+    @*<form id="newOriginDest">
+            <h5>Origin</h5>
+            <label for="originAddress">Street Address</label>
+            <input id="originAddress" name="originAddress">
 
-    <label for="originCity">City</label>
-    <input id="originCity" name="originCity">
+            <label for="originCity">City</label>
+            <input id="originCity" name="originCity">
 
-    <label for="originState">State Abbreviation</label>
-    <input id="originState" name="originState">
+            <label for="originState">State Abbreviation</label>
+            <input id="originState" name="originState">
 
-    <h5>Destination</h5>
-    <label for="destAddress">Street Address</label>
-    <input id="destAddress" name="destAddress">
+            <h5>Destination</h5>
+            <label for="destAddress">Street Address</label>
+            <input id="destAddress" name="destAddress">
 
-    <label for="destCity">City</label>
-    <input id="destCity" name="destCity">
+            <label for="destCity">City</label>
+            <input id="destCity" name="destCity">
 
-    <label for="destState">State Abbreviation</label>
-    <input id="destState" name="destState">
+            <label for="destState">State Abbreviation</label>
+            <input id="destState" name="destState">
 
-    <button type="submit">Submit</button>
-</form>*@
-
-<div id="origin"></div>
-<div id="route"><hr /><h5>Locations: </h5></div>
-
+            <button type="submit">Submit</button>
+        </form>*@
     <div class="ui-widget">
         <form id="auto2">
             <label for="auto">Add an Errand Business Stop!</label>
             <input id="auto" name="auto">
             <button data-target="modal1" type="submit">Submit</button>
         </form>
+
     </div>
-<div class="ui-widgetb">
-    <form id="auto2b">
-        <label for="autob">Add an Address Stop!</label>
-        <input id="autob" name="autob">
-        <button type="submit">Submit</button>
-    </form>
-</div>
+    <div class="ui-widgetb">
+        <form id="auto2b">
+            <label for="autob">Add an Address Stop!</label>
+            <input id="autob" name="autob">
+            <button class="submitErrand" type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="noResult">
+        <p>No Results....</p>
+        <button class="extend">Extend Search Radius?</button>
+    </div>
+
+    <div id="origin"></div>
+    <div id="route" class="row"><hr /><h5>Locations: </h5></div>
+
+
 
     <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-        Results:
         <div id="log"></div>
     </div>
 
-
+ </div>
 
 
 

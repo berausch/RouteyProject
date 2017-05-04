@@ -68,8 +68,8 @@ namespace Routey.Controllers
             var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
-            var allAuto1 = autoPlace.GetAutocompleteBusinesses(term, originLatitiude, originLongitude);
-            var allAuto2 = autoPlace.GetAutocompleteTerms(term, originLatitiude, originLongitude);
+            var allAuto1 = YelpAuto.GetAutocompleteBusinesses(term, originLatitiude, originLongitude);
+            var allAuto2 = YelpAuto.GetAutocompleteTerms(term, originLatitiude, originLongitude);
 
             allAuto1.AddRange(allAuto2);
             return Json(allAuto1);
@@ -81,25 +81,34 @@ namespace Routey.Controllers
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
             var allAuto = GoogleAuto.GetGoogleAddressAuto(term, originLatitiude, originLongitude);
-            Debug.WriteLine(allAuto);
             return Json(allAuto);
         }
+
 
         public IActionResult SetGoogleAddress(string auto)
         {
             var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
-            var thisLocation = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude);
-            var newLocation = GoogleLatLng.GetLatLng(thisLocation.Address, thisLocation.City, thisLocation.State);
-            newLocation.RouteId = GlobalRoute.RouteId;
-            newLocation.LocationType = "W";
+            var Check = GoogleAuto.GetGoogleAddressAuto(auto, originLatitiude, originLongitude);
+            if (Check.Count > 0)
+            {
+                var thisLocation = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude);
+                var newLocation = GoogleLatLng.GetLatLng(thisLocation.Address, thisLocation.City, thisLocation.State);
+                newLocation.RouteId = GlobalRoute.RouteId;
+                newLocation.LocationType = "W";
 
-            db.Locations.Add(newLocation);
-            db.SaveChanges();
+                db.Locations.Add(newLocation);
+                db.SaveChanges();
+                return Json(newLocation);
+            }
+            else {
+                bool noSubmit = false;
 
-            Debug.WriteLine(newLocation);
-            return Json(newLocation);
+                return Json(noSubmit);
+            }
+            
+            
         }
 
 
