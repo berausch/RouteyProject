@@ -106,13 +106,8 @@ namespace Routey.Controllers
                 bool noSubmit = false;
 
                 return Json(noSubmit);
-            }
-            
-            
+            } 
         }
-
-
-        
 
         public IActionResult OriginDestQ(string Origin)
         {
@@ -145,6 +140,15 @@ namespace Routey.Controllers
             db.SaveChanges();
             Debug.WriteLine(newLocation);
             return Json(newLocation);
+        }
+
+        public IActionResult EndRoute()
+        {
+            var mapLink = "https://www.google.com/maps/dir";
+            
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
+            mapLink = mapLink + "/" + thisPlace.AddressConcat;
+            return Json(mapLink);
         }
 
     }

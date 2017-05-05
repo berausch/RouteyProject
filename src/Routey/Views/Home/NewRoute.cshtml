@@ -117,7 +117,7 @@
                             $(".submitErrand").show();
                             response(result);
                         }
-                       
+
                     }
                 });
             },
@@ -157,25 +157,36 @@
                         $('#log').html(resultString);
 
                     }
-                    
+
+                }
+            });
+         });
+        $("#endRoute").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '@Url.Action("EndRoute")',
+                success: function (result) {
+                    console.log(result);
+                    var resultLink = '<a href="' + result + '">Map Link</a>';
+                    $('#mapLink').html(resultLink);
+
                 }
             });
         });
     });
 </script>
+
+
 <div class="container">
-    @*<form id="originSameQ">
-            <h4>Are the Origin and Destination the same?</h4>
-                <input type="radio"  name="origin" value="true" checked />
-                Yes
-                <input type="radio" name="origin" value="false" />
-                No
-                <button type="submit">Submit</button>
-
-        </form>*@
-
-    <h3>Create a Starting Point</h3>
+    
+    <h2>Routey</h2>
+    <h4>Take the Err out of your Errands</h4>
+    <hr />
+    <br />
     <form id="newOrigin">
+        <h5>Create a Starting Point</h5>
         <label for="originAddress">Street Address</label>
         <input id="originAddress" name="originAddress" value="2315 SE Ankeny st">
 
@@ -188,29 +199,6 @@
         <button type="submit">Submit</button>
     </form>
 
-    @*<form id="newOriginDest">
-            <h5>Origin</h5>
-            <label for="originAddress">Street Address</label>
-            <input id="originAddress" name="originAddress">
-
-            <label for="originCity">City</label>
-            <input id="originCity" name="originCity">
-
-            <label for="originState">State Abbreviation</label>
-            <input id="originState" name="originState">
-
-            <h5>Destination</h5>
-            <label for="destAddress">Street Address</label>
-            <input id="destAddress" name="destAddress">
-
-            <label for="destCity">City</label>
-            <input id="destCity" name="destCity">
-
-            <label for="destState">State Abbreviation</label>
-            <input id="destState" name="destState">
-
-            <button type="submit">Submit</button>
-        </form>*@
     <div class="ui-widget">
         <form id="auto2">
             <label for="auto">Add an Errand Business Stop!</label>
@@ -239,6 +227,12 @@
     <div class="ui-widget" style="margin-top:2em; font-family:Arial">
         <div id="log"></div>
     </div>
+
+    Done with your route?
+    <form id="endRoute">
+    <button  type="submit">Create your Link!</button>
+    </form>    
+    <div id="mapLink"></div>
 
  </div>
 
