@@ -28,7 +28,6 @@ namespace Routey.Models
 
         public bool Save { get; set; }
 
-        public int RouteId { get; set; }
         public string AddressConcat { get; set; }
 
         public string GoogleId { get; set; }
@@ -42,7 +41,11 @@ namespace Routey.Models
 
         public string LocationType { get; set; }
 
-        public virtual Route Route { get; set; }
+        [ForeignKey("RouteId")]
+        public Route Route { get; set; }
+
+        public int RouteId { get; set; }
+
 
         public Location()
         {

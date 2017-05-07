@@ -7,3 +7,12 @@ D:\Users\BrittanyRausch\Desktop\Epicodus\RouteyProject\src\Routey\obj\Debug\netc
 D:\Users\BrittanyRausch\Desktop\Epicodus\RouteyProject\src\Routey\obj\Debug\netcoreapp1.0\Routey.AssemblyInfo.cs
 D:\Users\BrittanyRausch\Desktop\Epicodus\RouteyProject\src\Routey\obj\Debug\netcoreapp1.0\Routey.dll
 D:\Users\BrittanyRausch\Desktop\Epicodus\RouteyProject\src\Routey\obj\Debug\netcoreapp1.0\Routey.pdb
+C:\Users\brausch\Documents\Epicodus\Routey\RouteyProject\src\Routey\bin\Debug\netcoreapp1.0\Routey.deps.json
+C:\Users\brausch\Documents\Epicodus\Routey\RouteyProject\src\Routey\bin\Debug\netcoreapp1.0\Routey.runtimeconfig.json
+C:\Users\brausch\Documents\Epicodus\Routey\RouteyProject\src\Routey\bin\Debug\netcoreapp1.0\Routey.runtimeconfig.dev.json
+C:\Users\brausch\Documents\Epicodus\Routey\RouteyProject\src\Routey\obj\Debug\netcoreapp1.0\Routey.csprojResolveAssemblyReference.cache
+C:\Users\brausch\Documents\Epicodus\Routey\RouteyProject\src\Routey\obj\Debug\netcoreapp1.0\Routey.AssemblyInfo.cs
+C:\Users\brausch\Documents\Epicodus\Routey\RouteyProject\src\Routey\obj\Debug\netcoreapp1.0\Routey.dll
+C:\Users\brausch\Documents\Epicodus\Routey\RouteyProject\src\Routey\obj\Debug\netcoreapp1.0\Routey.pdb
+C:\Users\brausch\Documents\Epicodus\Routey\RouteyProject\src\Routey\bin\Debug\netcoreapp1.0\Routey.dll
+C:\Users\brausch\Documents\Epicodus\Routey\RouteyProject\src\Routey\bin\Debug\netcoreapp1.0\Routey.pdb

@@ -14,6 +14,8 @@ using Routey.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace Routey
 {
@@ -29,21 +31,14 @@ namespace Routey
         }
         public void ConfigureServices(IServiceCollection services)
         {
+
+           
             services.AddMvc();
-            services.Configure<MvcOptions>(options =>
-            {
-                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
-                
 
-
-            });
-            
-            services.AddEntityFramework()
-                .AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            var connectionString = Configuration["DbContextSettings:ConnectionString"];
+            services.AddDbContext<DomainModelPostgreSqlContext>(
+                options => options.UseNpgsql(connectionString)
+            );
 
         }
 

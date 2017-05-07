@@ -21,7 +21,7 @@ namespace Routey.Controllers
     {
         
 
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private DomainModelPostgreSqlContext db = new DomainModelPostgreSqlContext();
         public IActionResult Index()
         {
             return View();

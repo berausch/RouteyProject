@@ -18,7 +18,7 @@ namespace Routey.Models
 
         public bool SaveRoute { get; set; }
 
-        public virtual ICollection<Location> Locations { get; set; }
+        public List<Location> Locations { get; set; }
 
         public Route()
         {
