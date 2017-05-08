@@ -19,9 +19,14 @@ namespace Routey.Controllers
 
     public class HomeController : Controller
     {
-        
 
-        private DomainModelPostgreSqlContext db = new DomainModelPostgreSqlContext();
+        private readonly DomainModelPostgreSqlContext db;
+        public HomeController(DomainModelPostgreSqlContext _db)
+        {
+            db = _db;
+        }
+
+
         public IActionResult Index()
         {
             return View();
