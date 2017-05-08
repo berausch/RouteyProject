@@ -8,8 +8,8 @@ using Routey.Models;
 namespace Routey.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170507212734_testpg4")]
-    partial class testpg4
+    [Migration("20170508030132_pgUpdate")]
+    partial class pgUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

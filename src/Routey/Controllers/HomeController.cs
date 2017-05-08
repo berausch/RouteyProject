@@ -16,12 +16,17 @@ namespace Routey.Controllers
     {
        public static int RouteId { get; set; }
     }
-
+    [Route("api/[controller]")]
     public class HomeController : Controller
     {
-        
+       
+        private readonly ApplicationDbContext db;
 
-        private DomainModelPostgreSqlContext db = new DomainModelPostgreSqlContext();
+        public HomeController(ApplicationDbContext _db)
+        {
+            db = _db;
+        }
+
         public IActionResult Index()
         {
             return View();

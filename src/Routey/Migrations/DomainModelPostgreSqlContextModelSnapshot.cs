@@ -7,7 +7,7 @@ using Routey.Models;
 
 namespace Routey.Migrations
 {
-    [DbContext(typeof(DomainModelPostgreSqlContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class DomainModelPostgreSqlContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

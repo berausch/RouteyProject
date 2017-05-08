@@ -36,7 +36,7 @@ namespace Routey
             services.AddMvc();
 
             var connectionString = Configuration["DbContextSettings:ConnectionString"];
-            services.AddDbContext<DomainModelPostgreSqlContext>(
+            services.AddDbContext<ApplicationDbContext>(
                 options => options.UseNpgsql(connectionString)
             );
 
@@ -46,7 +46,6 @@ namespace Routey
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseStaticFiles();
-            app.UseIdentity();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

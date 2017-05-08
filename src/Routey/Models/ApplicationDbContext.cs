@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Routey.Models
 {
-    public class DomainModelPostgreSqlContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
         public DbSet<Location> Locations { get; set; }
         public DbSet<Route> Routes { get; set; }
-        public DomainModelPostgreSqlContext(DbContextOptions<DomainModelPostgreSqlContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
          protected override void OnModelCreating(ModelBuilder builder)
@@ -41,7 +41,7 @@ namespace Routey.Models
 
  
         }
-        public DomainModelPostgreSqlContext()
+        public ApplicationDbContext()
         {
 
         }
