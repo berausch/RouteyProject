@@ -3803,7 +3803,7 @@
     "microsoft.aspnetcore/1.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-aqRZ/TrYstCRZsCRrINmMq6A3QCMBja2aJ9DyMXGaVkexJLPpVAyYbzj4ckRIxC7hPWxonfERxOp3Zn5clK/zQ==",
+      "sha512": "sha512-e698zHwPi7GDTh5AlrO/uT+oD6BAfWlWi5rNXDbaXDAEj8rY9NAfoCVvcwy8BIxyYVGeVUd9NFWriv7GbsxfFQ==",
       "path": "microsoft.aspnetcore/1.0.4",
       "hashPath": "microsoft.aspnetcore.1.0.4.nupkg.sha512"
     },
@@ -4111,7 +4111,7 @@
     "microsoft.aspnetcore.staticfiles/1.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-PihyNgzayyefJedzUtKUjw4w2UdVfqADuUKzd7bxnuOm2SRRR2LWANZCHXQJ4Em576zRbdcwc+ET+GKiETpNlw==",
+      "sha512": "sha512-x3uWPBrsDPL5tNQ2vB2EbCyS36aNQ4nT+t4W73is9tUOrwWWkPmSsW+tg8ZtgTPj2lhlRY9fyKDelaifs6+T+A==",
       "path": "microsoft.aspnetcore.staticfiles/1.0.2",
       "hashPath": "microsoft.aspnetcore.staticfiles.1.0.2.nupkg.sha512"
     },
@@ -4244,7 +4244,7 @@
     "microsoft.extensions.configuration.binder/1.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-UVHsL/WShjOgMiI8fhZGStBvYYPH0OSgChIvX7e9dHQFfcnGAYQrnGqJ1EIcjc4mMCx74x1krzHfHuZBSVhiyw==",
+      "sha512": "sha512-bFBk+rfepUAZHzsv5aCqAn7aG99Wmhn7bL2OSY9etnK5Kckm5phXxkIH2BxUwmsOqrasMLgGqo94DkUCEhcr7w==",
       "path": "microsoft.extensions.configuration.binder/1.0.2",
       "hashPath": "microsoft.extensions.configuration.binder.1.0.2.nupkg.sha512"
     },
@@ -4363,7 +4363,7 @@
     "microsoft.extensions.logging.debug/1.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-0LXSBYQgZbLbj9rPi9U5NdoFgT8TekQAxROMbi/dpRVdTqizWv0FKUIFHQjdyEr3WiWNv1UW6EFnZo6iuUbArQ==",
+      "sha512": "sha512-dzNlLuTGxMT28k6pPjcHieleXlIfakDwc22wpTv5I6G58E0ecX6zpJTYoqX+RUCZcuUKVQlDEbefX7k6dmewIw==",
       "path": "microsoft.extensions.logging.debug/1.0.2",
       "hashPath": "microsoft.extensions.logging.debug.1.0.2.nupkg.sha512"
     },
@@ -4384,7 +4384,7 @@
     "microsoft.extensions.options.configurationextensions/1.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-F5+JEyV7JpdCz10C5CD9BSmxb9RFvTjmCiXIV1nAYIO6Fp3NcsmhlIaLVMdtXm9bFjH8+QXPwlZLrvCseFDWQg==",
+      "sha512": "sha512-uR8+Nhf8eUKjZRunI2vXFdLnrrQPVRRh11LEmFv/N40sD8qTX9A8vBKCqpRORosAmcubRzNJp1BU/cUbs9AdFw==",
       "path": "microsoft.extensions.options.configurationextensions/1.0.2",
       "hashPath": "microsoft.extensions.options.configurationextensions.1.0.2.nupkg.sha512"
     },
@@ -4433,7 +4433,7 @@
     "microsoft.visualstudio.web.browserlink/1.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-4sjJwlB36pd5LjZSQ8+cSbju+ZSCmXheMl+EzCWdS9ud0owMDrhF4k5Wf2aEDWEWtceaSthkKKIVIrmYhUOORw==",
+      "sha512": "sha512-8AcKNRirCitRNpMdA8+MylPZ8pZOj7bPOV/uVlwtYAtxeaXcZnhTgOBRtAQ998+JTUsCZIgi8wH7pZ2sJWK7xw==",
       "path": "microsoft.visualstudio.web.browserlink/1.0.1",
       "hashPath": "microsoft.visualstudio.web.browserlink.1.0.1.nupkg.sha512"
     },
