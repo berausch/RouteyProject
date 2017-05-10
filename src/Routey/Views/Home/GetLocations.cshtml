@@ -7,13 +7,12 @@
             height: 600,
             width: 500,
             modal: true,
-            close: function ()
-            { 
+            close: function () {
                 $(this).dialog("destroy");
             }
         });
         $('#modal1').dialog('open');
-    $("#addThisLocation").submit(function (event) {
+        $(".addThisLocation").submit(function (event) {
             event.preventDefault();
             $.ajax({
                 type: 'GET',
@@ -21,10 +20,11 @@
                 data: $(this).serialize(),
                 url: '@Url.Action("AddLocation")',
                 success: function (result) {
+                    console.log(result);
                     $('#modal1').dialog('destroy');
                     $("#log").hide();
                     $("#route").show();
-                $('#route').append(result);
+                    $('#route').append(result);
                 }
             });
         });
@@ -33,15 +33,27 @@
 <hr />
 <div id="modal1">
 
-        @foreach (var yPlace in Model)
+        @foreach (var Place in Model)
         {
+             @if (Place.Name != "Address")
+             {
+                <p>@Html.DisplayFor(modelItem => Place.Name)</p>
 
-            <p>@Html.DisplayFor(modelItem => yPlace.Name)</p>
-            <p>@Html.DisplayFor(modelItem => yPlace.Location.Address1)</p>
-            <p>@Html.DisplayFor(modelItem => yPlace.Location.City), @Html.DisplayFor(modelItem => yPlace.Location.State) @Html.DisplayFor(modelItem => yPlace.Location.Zip_code)</p>
+             }
 
-            <form id="addThisLocation">
-                <input type="hidden" name="id" value="@yPlace.Id" />
+            <p>@Html.DisplayFor(modelItem => Place.Address)</p>
+            <p>@Html.DisplayFor(modelItem => Place.City), @Html.DisplayFor(modelItem => Place.State) @Html.DisplayFor(modelItem => Place.Zip)</p>
+            <script>
+                console.log(Place);
+            </script>
+            <form class="addThisLocation">
+                <input type="hidden" name="name" value="@Place.Name" />
+                <input type="hidden" name="address" value="@Place.Address" />
+                <input type="hidden" name="city" value="@Place.City" />
+                <input type="hidden" name="state" value="@Place.State" />
+                <input type="hidden" name="zip" value="@Place.Zip" />
+                <input type="hidden" name="latitude" value="@Place.Latitude" />
+                <input type="hidden" name="longitude" value="@Place.Longitude" />
                 <button type="submit">Add Me!</button>
             </form>
 

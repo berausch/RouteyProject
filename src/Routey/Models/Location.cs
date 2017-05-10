@@ -106,6 +106,19 @@ namespace Routey.Models
             YelpId = yelpId;
         }
 
+        public Location(string name, string address, string city, string state, string zip, string latitude, string longitude, string locationType, int routeId)
+        {
+            Name = name;
+            Address = address;
+            City = city;
+            State = state;
+            Zip = zip;
+            Latitude = latitude;
+            Longitude = longitude;
+            LocationType = locationType;
+            RouteId = routeId;
+        }
+
         public void apiAddress()
         {
             string addressNoSpace = Address.Replace(" ", "+");

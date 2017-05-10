@@ -64,7 +64,7 @@ namespace Routey.Models
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
             var yelplocationList = JsonConvert.DeserializeObject<List<YelpPlace>>(jsonResponse["businesses"].ToString());
 
-            var locationObjectList = yelplocationList.Select(x => new Location(x.Name, x.Location.Address1, x.Location.City, x.Location.State, x.Location.Zip_code, x.Coordinates.Latitude, x.Coordinates.Longitude)).ToList();
+            var locationObjectList = yelplocationList.Select(x => new Location(x.Name, x.Location.Address1, x.Location.City, x.Location.State, x.Location.Zip_code, x.Coordinates.Latitude, x.Coordinates.Longitude, x.Id)).ToList();
 
             return locationObjectList;
 

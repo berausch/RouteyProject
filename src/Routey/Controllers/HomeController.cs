@@ -41,25 +41,20 @@ namespace Routey.Controllers
             return PartialView(allLocations);
         }
 
-        public IActionResult AddLocation(Location thisPlace)
+        public IActionResult AddLocation(string name, string address, string city, string state, string zip, string latitude, string longitude)
         {
+            
             string locationType = "W";
-         
-            thisPlace.RouteId = GlobalRoute.RouteId;
-            thisPlace.LocationType = locationType;
-            thisPlace.apiAddress();
 
-            thisPlace.RouteId = GlobalRoute.RouteId;
-            db.Locations.Add(thisPlace);
+            Location newLocation = new Location(name, address, city, state, zip, latitude, longitude,locationType, GlobalRoute.RouteId);
+            newLocation.apiAddress();
+            Debug.WriteLine(newLocation);
+            db.Locations.Add(newLocation);
             db.SaveChanges();
 
-            return PartialView(thisPlace);
+            return PartialView(newLocation);
         }
 
-        public IActionResult Test()
-        {
-            return View();
-        }
 
         public IActionResult GetAuto(string term)
         {

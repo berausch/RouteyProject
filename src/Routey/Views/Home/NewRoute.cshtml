@@ -98,7 +98,7 @@
             });
         });
 
-         $("#autob").autocomplete({
+         @*$("#autob").autocomplete({
             source: function (request, response) {
 
                 $.ajax({
@@ -161,7 +161,7 @@
 
                 }
             });
-         });
+         });*@
         $("#endRoute").submit(function (event) {
             event.preventDefault();
             $.ajax({
@@ -208,13 +208,13 @@
         </form>
 
     </div>
-    <div class="ui-widgetb">
+    @*<div class="ui-widgetb">
         <form id="auto2b">
             <label for="autob">Add an Address Stop!</label>
             <input id="autob" name="autob">
             <button class="submitErrand" type="submit">Submit</button>
         </form>
-    </div>
+    </div>*@
     <div class="noResult">
         <p>No Results....</p>
         <button class="extend">Extend Search Radius?</button>
