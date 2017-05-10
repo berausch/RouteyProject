@@ -52,7 +52,7 @@ namespace Routey.Models
             var autoGoogleList = JsonConvert.DeserializeObject<List<GoogleAuto>>(jsonResponse["predictions"].ToString());
 
             var secondLine = autoGoogleList[0].structured_formatting.secondary_text.Split(',');
-            Location thisLocation = new Location(autoGoogleList[0].structured_formatting.main_text, secondLine[0], secondLine[1].Remove(0, 1), autoGoogleList[0].place_id);
+            Location thisLocation = new Location("Address",autoGoogleList[0].structured_formatting.main_text, secondLine[0], secondLine[1].Remove(0, 1), autoGoogleList[0].place_id);
 
             return thisLocation;
         }
@@ -91,7 +91,7 @@ namespace Routey.Models
             request.AddHeader("cache-control", "no-cache");
             request.AddParameter("input", userInput);
             request.AddParameter("location", lat + "," + lon);
-            request.AddParameter("radius", 50);
+            request.AddParameter("radius", 200000);
             request.AddParameter("types", "address");
             request.AddParameter("key", "AIzaSyBniQDIBB4eoG7DLjs29N0Hm2bZRiJJrVA");
 

@@ -1,8 +1,14 @@
 ﻿
 @model Routey.Models.YelpPlace
+<script>
+    $(document).ready(function () {
+        $("#done").show();
+
+    });
+</script>
 
 <div  class="col s3">
     <p>@Html.DisplayFor(model => model.Name)</p>
     <p>@Html.DisplayFor(model => model.Location.Address1)</p>
     <p>@Html.DisplayFor(model => model.Location.City), @Html.DisplayFor(model => model.Location.State) @Html.DisplayFor(model => model.Location.Zip_code)</p>
-</div>s
+</div>

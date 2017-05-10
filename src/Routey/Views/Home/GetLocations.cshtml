@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Routey.Models.YelpPlace>
+﻿@model IEnumerable<Routey.Models.Location>
 
 <script>
     $(document).ready(function () {
@@ -36,9 +36,9 @@
         @foreach (var yPlace in Model)
         {
 
-            <li>Name: @Html.DisplayFor(modelItem => yPlace.Name)</li>
-            <li>Address1: @Html.DisplayFor(modelItem => yPlace.Location.Address1)</li>
-            <li>Address2: @Html.DisplayFor(modelItem => yPlace.Location.City), @Html.DisplayFor(modelItem => yPlace.Location.State) @Html.DisplayFor(modelItem => yPlace.Location.Zip_code)</li>
+            <p>@Html.DisplayFor(modelItem => yPlace.Name)</p>
+            <p>@Html.DisplayFor(modelItem => yPlace.Location.Address1)</p>
+            <p>@Html.DisplayFor(modelItem => yPlace.Location.City), @Html.DisplayFor(modelItem => yPlace.Location.State) @Html.DisplayFor(modelItem => yPlace.Location.Zip_code)</p>
 
             <form id="addThisLocation">
                 <input type="hidden" name="id" value="@yPlace.Id" />

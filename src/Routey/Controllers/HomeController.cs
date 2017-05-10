@@ -32,30 +32,28 @@ namespace Routey.Controllers
             var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
-            var allLocations = YelpPlace.GetLocations(auto, originLatitiude, originLongitude);
-            for(var i = 0; i < allLocations.Count; i++)
-            {
-                allLocations[i].YelpTerm = auto;
-                
-            }
+            var allLocationsYelp = YelpPlace.GetLocations(auto, originLatitiude, originLongitude);
+            var allLocationsGoogle = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude);
+
+            var allLocations = allLocationsYelp;
+            allLocations.Add(allLocationsGoogle);
 
             return PartialView(allLocations);
         }
 
-        public IActionResult AddLocation(string id)
+        public IActionResult AddLocation(Location thisPlace)
         {
-            var thisPlace = YelpPlace.AddLocation(id);
             string locationType = "W";
          
             thisPlace.RouteId = GlobalRoute.RouteId;
-            Location newLocation = new Location(thisPlace.Name, thisPlace.Location.Address1, thisPlace.Location.City, thisPlace.Location.State, thisPlace.Location.Zip_code, thisPlace.Coordinates.Latitude, thisPlace.Coordinates.Longitude, thisPlace.Id, locationType);
-            newLocation.apiAddress();
+            thisPlace.LocationType = locationType;
+            thisPlace.apiAddress();
 
-            newLocation.RouteId = GlobalRoute.RouteId;
-            db.Locations.Add(newLocation);
+            thisPlace.RouteId = GlobalRoute.RouteId;
+            db.Locations.Add(thisPlace);
             db.SaveChanges();
 
-            return View(thisPlace);
+            return PartialView(thisPlace);
         }
 
         public IActionResult Test()
@@ -68,11 +66,14 @@ namespace Routey.Controllers
             var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
-            var allAuto1 = YelpAuto.GetAutocompleteBusinesses(term, originLatitiude, originLongitude);
-            var allAuto2 = YelpAuto.GetAutocompleteTerms(term, originLatitiude, originLongitude);
+            var allAutoBiz = YelpAuto.GetAutocompleteBusinesses(term, originLatitiude, originLongitude);
+            var allAutoTerm = YelpAuto.GetAutocompleteTerms(term, originLatitiude, originLongitude);
+            var allAutoAddress = GoogleAuto.GetGoogleAddressAuto(term, originLatitiude, originLongitude);
 
-            allAuto1.AddRange(allAuto2);
-            return Json(allAuto1);
+            var allAuto = allAutoBiz;
+            allAuto.AddRange(allAutoTerm);
+            allAuto.AddRange(allAutoAddress);
+            return Json(allAuto);
         }
 
         public IActionResult GetGoogleAuto(string term)

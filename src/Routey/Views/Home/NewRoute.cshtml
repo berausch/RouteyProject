@@ -10,6 +10,7 @@
         $(".ui-widgetb").hide();
         $(".noResult").hide();
         $("#route").hide();
+        $("#done").hide();
         @*$("#originSameQ").submit(function (event) {
             event.preventDefault();
             $.ajax({
@@ -224,15 +225,18 @@
 
 
 
-    <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-        <div id="log"></div>
-    </div>
 
-    Done with your route?
-    <form id="endRoute">
-    <button  type="submit">Create your Link!</button>
-    </form>    
-    <div id="mapLink"></div>
+        <div id="log"></div>
+    
+
+
+    <div id="done">
+        Done with your route?
+        <form id="endRoute">
+        <button  type="submit">Create your Link!</button>
+        </form>    
+        <div id="mapLink"></div>
+    </div>
 
  </div>
 

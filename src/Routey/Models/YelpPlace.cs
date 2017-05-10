@@ -45,7 +45,7 @@ namespace Routey.Models
 
 
 
-        public static List<YelpPlace> GetLocations(string userInput, string lat, string lon)
+        public static List<Location> GetLocations(string userInput, string lat, string lon)
         {
             var client = new RestClient("https://api.yelp.com/v3/businesses/search?&");
             var request = new RestRequest(Method.GET);
@@ -62,8 +62,11 @@ namespace Routey.Models
                 response = await GetResponseContentAsync(client, request) as RestResponse;
             }).Wait();
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
-            var locationList = JsonConvert.DeserializeObject<List<YelpPlace>>(jsonResponse["businesses"].ToString());
-            return locationList;
+            var yelplocationList = JsonConvert.DeserializeObject<List<YelpPlace>>(jsonResponse["businesses"].ToString());
+
+            var locationObjectList = yelplocationList.Select(x => new Location(x.Name, x.Location.Address1, x.Location.City, x.Location.State, x.Location.Zip_code, x.Coordinates.Latitude, x.Coordinates.Longitude)).ToList();
+
+            return locationObjectList;
 
         }
 

@@ -64,8 +64,9 @@ namespace Routey.Models
             State = state;
         }
 
-        public Location(string address, string city, string state, string googleId)
+        public Location(string name, string address, string city, string state, string googleId)
         {
+            Name = name;
             Address = address;
             City = city;
             State = state;
@@ -91,7 +92,18 @@ namespace Routey.Models
             YelpId = yelpId;
             LocationType = locationType;
             Save = save;
+        }
 
+        public Location(string name, string address, string city, string state, string zip, string latitude, string longitude, string yelpId)
+        {
+            Name = name;
+            Address = address;
+            City = city;
+            State = state;
+            Zip = zip;
+            Latitude = latitude;
+            Longitude = longitude;
+            YelpId = yelpId;
         }
 
         public void apiAddress()
