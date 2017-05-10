@@ -22,7 +22,7 @@ namespace Routey.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(@"Data Source=tcp:routeydbserver.database.windows.net,1433;Initial Catalog=Routey_db;User Id=berausch@routeydbserver;Password=haPPy631");
+            options.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=Routey;integrated security=True;");
         }
 
         public ApplicationDbContext()
