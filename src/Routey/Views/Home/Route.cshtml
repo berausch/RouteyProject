@@ -8,7 +8,6 @@
     $(document).ready(function () {
         $(".ui-widget").hide();
         $(".ui-widgetb").hide();
-        $(".noResult").hide();
         $("#route").hide();
         $("#done").hide();
         @*$("#originSameQ").submit(function (event) {
@@ -44,7 +43,9 @@
                         term: request.term
                     },
                     success: function (result) {
-                       response(result);
+                        response(result);
+                        $("#submitErrand").show();
+                        $("#extend").hide();
                     }
                 });
             },
@@ -72,7 +73,6 @@
                 data: $(this).serialize(),
                 url: '@Url.Action("GetLocations")',
                 success: function (result) {
-                    console.log(result);
                     $("#log").show();
                     $('#log').html(result);
                 }
@@ -87,11 +87,12 @@
                 data: $(this).serialize(),
                 url: '@Url.Action("CreateNewOrigin")',
                 success: function (result) {
-                    var resultStringOrigin = "<h5>Start:</h5> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
+                    var resultStringOrigin = "<br /><hr><h5>Start:</h5> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
                     console.log(result);
                     $(".ui-widget").show();
                     $(".ui-widgetb").show();
                     $("#newOrigin").hide();
+                    $("#extend").hide();
                     $('#origin').html(resultStringOrigin);
 
                 }
@@ -176,6 +177,21 @@
                 }
             });
         });
+
+          $("#extend").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: 'GET',
+                dataType: 'html',
+                url: '@Url.Action("EndRoute")',
+                success: function (result) {
+                    console.log(result);
+                    var resultLink = '<a href="' + result + '">Map Link</a>';
+                    $('#mapLink').html(resultLink);
+
+                }
+            });
+        });
     });
 </script>
 
@@ -203,10 +219,14 @@
     <div class="ui-widget">
         <form id="auto2">
             <label for="auto">Add an Errand Business Stop!</label>
-            <input id="auto" name="auto">
-            <button data-target="modal1" type="submit">Submit</button>
+            <input id="auto" name="auto"> 
+            <button data-target="modal1" id="submitErrand" type="submit">Submit</button>
+            <div id="extend">
+                <h5>No Results...</h5>
+                <br />
+                <button id="extend" type="submit">Extend Search Radius?</button>
+            </div>
         </form>
-
     </div>
     @*<div class="ui-widgetb">
         <form id="auto2b">
@@ -215,10 +235,8 @@
             <button class="submitErrand" type="submit">Submit</button>
         </form>
     </div>*@
-    <div class="noResult">
-        <p>No Results....</p>
-        <button class="extend">Extend Search Radius?</button>
-    </div>
+    <div id="log"></div>
+
 
     <div id="origin"></div>
     <div id="route" class="row"><hr /><h5>Locations: </h5></div>
@@ -226,7 +244,7 @@
 
 
 
-        <div id="log"></div>
+        
     
 
 

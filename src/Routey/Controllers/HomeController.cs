@@ -27,6 +27,7 @@ namespace Routey.Controllers
             return View();
         }
 
+
         public IActionResult GetLocations(string auto)
         {
             var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
@@ -34,11 +35,23 @@ namespace Routey.Controllers
             var originLongitude = thisPlace.Longitude;
             var allLocationsYelp = YelpPlace.GetLocations(auto, originLatitiude, originLongitude);
             var allLocationsGoogle = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude);
-
             var allLocations = allLocationsYelp;
-            allLocations.Add(allLocationsGoogle);
+            allLocations.AddRange(allLocationsGoogle);
+            Debug.WriteLine(allLocations);
+            if (allLocations.Count > 0)
+            {
+                return PartialView(allLocations);
+                
+            }
+            else
+            {
+                return RedirectToAction("NoResult");
+            }
+        }
 
-            return PartialView(allLocations);
+        public IActionResult NoResult()
+        {
+            return PartialView();
         }
 
         public IActionResult AddLocation(string name, string address, string city, string state, string zip, string latitude, string longitude)
@@ -90,7 +103,7 @@ namespace Routey.Controllers
             if (Check.Count > 0)
             {
                 var thisLocation = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude);
-                var newLocation = GoogleLatLng.GetLatLng(thisLocation.Address, thisLocation.City, thisLocation.State);
+                var newLocation = GoogleLatLng.GetLatLng(thisLocation[0].Address, thisLocation[0].City, thisLocation[0].State);
                 newLocation.RouteId = GlobalRoute.RouteId;
                 newLocation.LocationType = "W";
 
@@ -111,7 +124,7 @@ namespace Routey.Controllers
             return Content(Origin);
         }
 
-        public IActionResult NewRoute()
+        public IActionResult Route()
         {
 
             Route newRoute = new Route();

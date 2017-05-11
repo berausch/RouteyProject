@@ -14,7 +14,7 @@ using System.Diagnostics;
 
 namespace Routey.Models
 {
-    public class GoogleAuto
+    public class GooglePlace
     {
         public string Description { get; set; }
 
@@ -35,15 +35,12 @@ namespace Routey.Models
 
         public static List<Location> GetGoogleAddress(string userInput, string lat, string lon)
         {
-            var client = new RestClient("https://maps.googleapis.com/maps/api/place/autocomplete/json?strictbounds");
+            var client = new RestClient("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
             var request = new RestRequest(Method.GET);
             request.AddHeader("postman-token", "d35742c7-3445-607f-20ec-1a1ec565cc0b");
             request.AddHeader("cache-control", "no-cache");
             request.AddParameter("input", userInput);
-            request.AddParameter("location", lat+","+lon);
-            request.AddParameter("radius", 100000);
-            request.AddParameter("types", "address");
-            request.AddParameter("language", "en");
+            request.AddParameter("location", lat + "," + lon);
 
             request.AddParameter("key", "AIzaSyBniQDIBB4eoG7DLjs29N0Hm2bZRiJJrVA");
 
@@ -57,13 +54,13 @@ namespace Routey.Models
             var status = jsonResponse["status"].ToString();
             var autoGoogleList = JsonConvert.DeserializeObject<List<GoogleAuto>>(jsonResponse["predictions"].ToString());
             List<Location> thisLocationList = new List<Location>();
-            if(status == "OK")
+            if (status == "OK")
             {
                 var secondLine = autoGoogleList[0].structured_formatting.secondary_text.Split(',');
                 Location thisLocation = new Location("Address", autoGoogleList[0].structured_formatting.main_text, secondLine[0], secondLine[1].Remove(0, 1), autoGoogleList[0].place_id);
                 thisLocationList.Add(thisLocation);
             }
-
+            Debug.WriteLine(status);
             return thisLocationList;
         }
 
