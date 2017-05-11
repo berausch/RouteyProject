@@ -51,6 +51,13 @@ namespace Routey.Controllers
 
         public IActionResult NoResult()
         {
+
+            return PartialView();
+        }
+
+        public IActionResult NoResultExtend()
+        {
+
             return PartialView();
         }
 
@@ -158,6 +165,27 @@ namespace Routey.Controllers
             var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
             mapLink = mapLink + "/" + thisPlace.AddressConcat;
             return Json(mapLink);
+        }
+
+        public IActionResult ExtendGetLocations(string auto)
+        {
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
+            var originLatitiude = thisPlace.Latitude;
+            var originLongitude = thisPlace.Longitude;
+            var allLocationsYelp = YelpPlace.GetLocationsExtend(auto, originLatitiude, originLongitude);
+            var allLocationsGoogle = GoogleAuto.GetGoogleAddressExtend(auto, originLatitiude, originLongitude);
+            var allLocations = allLocationsYelp;
+            allLocations.AddRange(allLocationsGoogle);
+            Debug.WriteLine(allLocations);
+            if (allLocations.Count > 0)
+            {
+                return PartialView(allLocations);
+
+            }
+            else
+            {
+                return RedirectToAction("NoResultExtend");
+            }
         }
 
     }

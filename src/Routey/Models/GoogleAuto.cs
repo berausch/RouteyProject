@@ -41,7 +41,7 @@ namespace Routey.Models
             request.AddHeader("cache-control", "no-cache");
             request.AddParameter("input", userInput);
             request.AddParameter("location", lat+","+lon);
-            request.AddParameter("radius", 100000);
+            request.AddParameter("radius", 400000);
             request.AddParameter("types", "address");
             request.AddParameter("language", "en");
 
@@ -93,15 +93,15 @@ namespace Routey.Models
             Debug.WriteLine(response);
             return autoList;
         }
-        public static List<string> GetGoogleAddressAutoExtend(string userInput, string lat, string lon)
+        public static List<Location> GetGoogleAddressExtend(string userInput, string lat, string lon)
         {
-            var client = new RestClient("https://maps.googleapis.com/maps/api/place/autocomplete/json?");
+            var client = new RestClient("https://maps.googleapis.com/maps/api/place/autocomplete/json?&strictbounds");
             var request = new RestRequest(Method.GET);
             request.AddHeader("postman-token", "d35742c7-3445-607f-20ec-1a1ec565cc0b");
             request.AddHeader("cache-control", "no-cache");
             request.AddParameter("input", userInput);
             request.AddParameter("location", lat + "," + lon);
-            request.AddParameter("radius", 200000);
+            request.AddParameter("radius", 400000);
             request.AddParameter("types", "address");
             request.AddParameter("key", "AIzaSyBniQDIBB4eoG7DLjs29N0Hm2bZRiJJrVA");
 
@@ -112,12 +112,17 @@ namespace Routey.Models
                 response = await GetResponseContentAsync(client, request) as RestResponse;
             }).Wait();
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
+            var status = jsonResponse["status"].ToString();
             var autoGoogleList = JsonConvert.DeserializeObject<List<GoogleAuto>>(jsonResponse["predictions"].ToString());
+            List<Location> thisLocationList = new List<Location>();
+            if (status == "OK")
+            {
+                var secondLine = autoGoogleList[0].structured_formatting.secondary_text.Split(',');
+                Location thisLocation = new Location("Address", autoGoogleList[0].structured_formatting.main_text, secondLine[0], secondLine[1].Remove(0, 1), autoGoogleList[0].place_id);
+                thisLocationList.Add(thisLocation);
+            }
 
-            List<string> autoList = autoGoogleList.Select(s => s.Description).ToList();
-
-            Debug.WriteLine(response);
-            return autoList;
+            return thisLocationList;
         }
 
         public static Task<IRestResponse> GetResponseContentAsync(RestClient theClient, RestRequest theRequest)

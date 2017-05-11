@@ -10,28 +10,6 @@
         $(".ui-widgetb").hide();
         $("#route").hide();
         $("#done").hide();
-        @*$("#originSameQ").submit(function (event) {
-            event.preventDefault();
-            $.ajax({
-                type: 'GET',
-                data: $(this).serialize(),
-                url: '@Url.Action("OriginDestQ")',
-                success: function (result) {
-                    if(result == "true")
-                    {
-                        $("#newOrigin").show();
-                        $("#newOriginDest").hide();
-
-                    } else if(result == "false")
-                    {
-                        $("#newOriginDest").show();
-                        $("#newOrigin").hide();
-                    }
-
-                 }
-            });
-        });*@
-
 
         $("#auto").autocomplete({
             source: function (request, response) {
@@ -99,70 +77,6 @@
             });
         });
 
-         @*$("#autob").autocomplete({
-            source: function (request, response) {
-
-                $.ajax({
-                    url: '@Url.Action("GetGoogleAuto")',
-                    dataType: "json",
-                    data: {
-                        term: request.term
-                    },
-                    success: function (result) {
-                        console.log(result);
-                        if (result.length === 0) {
-                            $(".noResult").show();
-                            $(".submitErrand").hide();
-                            console.log(result);
-                        }
-                        else {
-                            $(".submitErrand").show();
-                            response(result);
-                        }
-
-                    }
-                });
-            },
-            minLength: 2,
-            select: function (event, ui) {
-                $.ajax({
-                    type: 'GET',
-                    dataType: 'json',
-                    data: {
-                        auto: ui.item.value
-                    },
-                    url: '@Url.Action("SetGoogleAddress")',
-                    success: function (result) {
-                        var resultString = "<p>Errand Address:</p> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
-                        $("#log").show();
-                        $('#log').html(resultString);
-                    }
-                });
-            }
-        });
-        $("#auto2b").submit(function (event) {
-            event.preventDefault();
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                data: $(this).serialize(),
-                url: '@Url.Action("SetGoogleAddress")',
-                success: function (result) {
-                    if (result == false)
-                    {
-                        $('#log').append("No Location Found...");
-
-                    }
-                    else {
-                        var resultString = "<p>Errand Address:</p> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
-                        $("#log").show();
-                        $('#log').html(resultString);
-
-                    }
-
-                }
-            });
-         });*@
         $("#endRoute").submit(function (event) {
             event.preventDefault();
             $.ajax({
@@ -183,11 +97,10 @@
             $.ajax({
                 type: 'GET',
                 dataType: 'html',
-                url: '@Url.Action("EndRoute")',
+                url: '@Url.Action("Extend")',
                 success: function (result) {
                     console.log(result);
-                    var resultLink = '<a href="' + result + '">Map Link</a>';
-                    $('#mapLink').html(resultLink);
+                    $('#mapLink').html(result);
 
                 }
             });
