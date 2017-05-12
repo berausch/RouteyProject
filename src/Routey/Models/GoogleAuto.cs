@@ -37,7 +37,6 @@ namespace Routey.Models
         {
             var client = new RestClient("https://maps.googleapis.com/maps/api/place/autocomplete/json?strictbounds");
             var request = new RestRequest(Method.GET);
-            request.AddHeader("postman-token", "d35742c7-3445-607f-20ec-1a1ec565cc0b");
             request.AddHeader("cache-control", "no-cache");
             request.AddParameter("input", userInput);
             request.AddParameter("location", lat+","+lon);
@@ -71,7 +70,6 @@ namespace Routey.Models
         {
             var client = new RestClient("https://maps.googleapis.com/maps/api/place/autocomplete/json?&strictbounds");
             var request = new RestRequest(Method.GET);
-            request.AddHeader("postman-token", "d35742c7-3445-607f-20ec-1a1ec565cc0b");
             request.AddHeader("cache-control", "no-cache");
             request.AddParameter("input", userInput);
             request.AddParameter("location", lat + "," + lon);
@@ -93,18 +91,16 @@ namespace Routey.Models
             Debug.WriteLine(response);
             return autoList;
         }
-        public static List<Location> GetGoogleAddressExtend(string userInput, string lat, string lon)
+        public static List<Location> GetGoogleAddressExtend(string auto, string lat, string lon)
         {
             var client = new RestClient("https://maps.googleapis.com/maps/api/place/autocomplete/json?&strictbounds");
             var request = new RestRequest(Method.GET);
-            request.AddHeader("postman-token", "d35742c7-3445-607f-20ec-1a1ec565cc0b");
             request.AddHeader("cache-control", "no-cache");
-            request.AddParameter("input", userInput);
+            request.AddParameter("input", auto);
             request.AddParameter("location", lat + "," + lon);
             request.AddParameter("radius", 400000);
-            request.AddParameter("types", "address");
             request.AddParameter("key", "AIzaSyBniQDIBB4eoG7DLjs29N0Hm2bZRiJJrVA");
-
+            Debug.WriteLine(auto);
 
             var response = new RestResponse();
             Task.Run(async () =>
@@ -115,6 +111,7 @@ namespace Routey.Models
             var status = jsonResponse["status"].ToString();
             var autoGoogleList = JsonConvert.DeserializeObject<List<GoogleAuto>>(jsonResponse["predictions"].ToString());
             List<Location> thisLocationList = new List<Location>();
+            Debug.WriteLine(autoGoogleList);
             if (status == "OK")
             {
                 var secondLine = autoGoogleList[0].structured_formatting.secondary_text.Split(',');

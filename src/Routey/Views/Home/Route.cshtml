@@ -25,6 +25,7 @@
                         response(result);
                         $("#submitErrand").show();
                         $("#extend").hide();
+                        $("#extendShow").hide();
                         $("#extend").removeClass("Command");
                         $("#submitErrand").addClass("Command");
                     }
@@ -52,7 +53,7 @@
                     type: 'GET',
                     dataType: 'html',
                     data: {
-                        auto: $(this).serialize(),
+                        auto: $("#auto").val(),
                         Command: $(".Command").val()
                     },
                     url: '@Url.Action("GetLocations")',

@@ -9,6 +9,7 @@
             modal: true,
             close: function () {
                 $(this).dialog("destroy");
+                $("#log").hide();
             }
         });
         $('#modal1').dialog('open');
@@ -43,9 +44,6 @@
 
             <p>@Html.DisplayFor(modelItem => Place.Address)</p>
             <p>@Html.DisplayFor(modelItem => Place.City), @Html.DisplayFor(modelItem => Place.State) @Html.DisplayFor(modelItem => Place.Zip)</p>
-            <script>
-                console.log(Place);
-            </script>
             <form class="addThisLocation">
                 <input type="hidden" name="name" value="@Place.Name" />
                 <input type="hidden" name="address" value="@Place.Address" />

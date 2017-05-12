@@ -55,10 +55,7 @@ namespace Routey.Controllers
                 var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
                 var originLatitiude = thisPlace.Latitude;
                 var originLongitude = thisPlace.Longitude;
-                var allLocationsYelp = YelpPlace.GetLocationsExtend(auto, originLatitiude, originLongitude);
-                var allLocationsGoogle = GoogleAuto.GetGoogleAddressExtend(auto, originLatitiude, originLongitude);
-                var allLocations = allLocationsYelp;
-                allLocations.AddRange(allLocationsGoogle);
+                var allLocations = GoogleAuto.GetGoogleAddressExtend(auto, originLatitiude, originLongitude);
                 Debug.WriteLine(allLocations);
                 if (allLocations.Count > 0)
                 {
@@ -104,7 +101,7 @@ namespace Routey.Controllers
 
 
         public IActionResult GetAuto(string term)
-        {
+       {
             var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
