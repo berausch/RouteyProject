@@ -10,6 +10,7 @@
         $(".ui-widgetb").hide();
         $("#route").hide();
         $("#done").hide();
+        $("#extendShow").hide();
 
         $("#auto").autocomplete({
             source: function (request, response) {
@@ -24,6 +25,8 @@
                         response(result);
                         $("#submitErrand").show();
                         $("#extend").hide();
+                        $("#extend").removeClass("Command");
+                        $("#submitErrand").addClass("Command");
                     }
                 });
             },
@@ -43,19 +46,22 @@
                 });
             }
         });
-        $("#auto2").submit(function (event) {
-            event.preventDefault();
-            $.ajax({
-                type: 'GET',
-                dataType: 'html',
-                data: $(this).serialize(),
-                url: '@Url.Action("GetLocations")',
-                success: function (result) {
-                    $("#log").show();
-                    $('#log').html(result);
-                }
+            $("#auto2").submit(function(event){
+                event.preventDefault();
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'html',
+                    data: {
+                        auto: $(this).serialize(),
+                        Command: $(".Command").val()
+                    },
+                    url: '@Url.Action("GetLocations")',
+                    success: function (result) {
+                        $("#log").show();
+                        $('#log').html(result);
+                    }
+                });
             });
-        });
 
         $("#newOrigin").submit(function (event) {
             event.preventDefault();
@@ -71,6 +77,8 @@
                     $(".ui-widgetb").show();
                     $("#newOrigin").hide();
                     $("#extend").hide();
+                    $("#extend").removeClass("Command");
+                    $("#submitErrand").addClass("Command");
                     $('#origin').html(resultStringOrigin);
 
                 }
@@ -87,20 +95,6 @@
                     console.log(result);
                     var resultLink = '<a href="' + result + '">Map Link</a>';
                     $('#mapLink').html(resultLink);
-
-                }
-            });
-        });
-
-          $("#extend").submit(function (event) {
-            event.preventDefault();
-            $.ajax({
-                type: 'GET',
-                dataType: 'html',
-                url: '@Url.Action("Extend")',
-                success: function (result) {
-                    console.log(result);
-                    $('#mapLink').html(result);
 
                 }
             });
@@ -133,14 +127,13 @@
         <form id="auto2">
             <label for="auto">Add an Errand Business Stop!</label>
             <input id="auto" name="auto"> 
-            <button data-target="modal1" id="submitErrand" type="submit">Submit</button>
-            <div id="extend">
-                <h5>No Results...</h5>
-                <br />
-                <button id="extend" type="submit">Extend Search Radius?</button>
-            </div>
+            <button id="submitErrand" type="submit" class="Command" value="submit">Submit</button>
+            <button type="submit" id="extend" value="extend">Extend Search Radius</button>
+
         </form>
     </div>
+
+    <div id="extendShow">No Results...Try a different term</div>
     @*<div class="ui-widgetb">
         <form id="auto2b">
             <label for="autob">Add an Address Stop!</label>

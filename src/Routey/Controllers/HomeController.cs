@@ -27,26 +27,53 @@ namespace Routey.Controllers
             return View();
         }
 
-
-        public IActionResult GetLocations(string auto)
+        public IActionResult GetLocations(string auto, string Command)
         {
-            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
-            var originLatitiude = thisPlace.Latitude;
-            var originLongitude = thisPlace.Longitude;
-            var allLocationsYelp = YelpPlace.GetLocations(auto, originLatitiude, originLongitude);
-            var allLocationsGoogle = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude);
-            var allLocations = allLocationsYelp;
-            allLocations.AddRange(allLocationsGoogle);
-            Debug.WriteLine(allLocations);
-            if (allLocations.Count > 0)
+            Debug.WriteLine(Command);
+
+            if(Command == "submit")
             {
-                return PartialView(allLocations);
-                
-            }
-            else
+                var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
+                var originLatitiude = thisPlace.Latitude;
+                var originLongitude = thisPlace.Longitude;
+                var allLocationsYelp = YelpPlace.GetLocations(auto, originLatitiude, originLongitude);
+                var allLocationsGoogle = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude);
+                var allLocations = allLocationsYelp;
+                allLocations.AddRange(allLocationsGoogle);
+                Debug.WriteLine(allLocations);
+                if (allLocations.Count > 0)
+                {
+                    return PartialView(allLocations);
+
+                }
+                else
+                {
+                    return RedirectToAction("NoResult");
+                }
+            } else if(Command == "extend")
             {
-                return RedirectToAction("NoResult");
+                var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
+                var originLatitiude = thisPlace.Latitude;
+                var originLongitude = thisPlace.Longitude;
+                var allLocationsYelp = YelpPlace.GetLocationsExtend(auto, originLatitiude, originLongitude);
+                var allLocationsGoogle = GoogleAuto.GetGoogleAddressExtend(auto, originLatitiude, originLongitude);
+                var allLocations = allLocationsYelp;
+                allLocations.AddRange(allLocationsGoogle);
+                Debug.WriteLine(allLocations);
+                if (allLocations.Count > 0)
+                {
+                    return PartialView(allLocations);
+
+                }
+                else
+                {
+                    return RedirectToAction("NoResultExtend");
+                }
             }
+
+            return RedirectToAction("Error");
+
+
         }
 
         public IActionResult NoResult()
@@ -167,26 +194,6 @@ namespace Routey.Controllers
             return Json(mapLink);
         }
 
-        public IActionResult ExtendGetLocations(string auto)
-        {
-            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
-            var originLatitiude = thisPlace.Latitude;
-            var originLongitude = thisPlace.Longitude;
-            var allLocationsYelp = YelpPlace.GetLocationsExtend(auto, originLatitiude, originLongitude);
-            var allLocationsGoogle = GoogleAuto.GetGoogleAddressExtend(auto, originLatitiude, originLongitude);
-            var allLocations = allLocationsYelp;
-            allLocations.AddRange(allLocationsGoogle);
-            Debug.WriteLine(allLocations);
-            if (allLocations.Count > 0)
-            {
-                return PartialView(allLocations);
-
-            }
-            else
-            {
-                return RedirectToAction("NoResultExtend");
-            }
-        }
 
     }
 }
