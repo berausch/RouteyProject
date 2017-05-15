@@ -45,7 +45,7 @@ namespace Routey.Models
 
 
 
-        public static List<Location> GetLocations(string userInput, string lat, string lon)
+        public static List<Location> GetLocations(string userInput, string lat, string lon, int radius)
         {
             var client = new RestClient("https://api.yelp.com/v3/businesses/search?&");
             var request = new RestRequest(Method.GET);
@@ -53,7 +53,7 @@ namespace Routey.Models
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("authorization", "Bearer Drh3Xrl-pkzYk-KyZtWgqtBx_uZHrbCzP7vFAnCdUydCSgdrmP1AV4_1sKKhKIuoKVqLNh9NKb0t2hPIybxt6CB9tqtShtUVguyOadwm4-t_0kI2mQSV5gtcR5O9WHYx");
             request.AddParameter("term", userInput);
-            request.AddParameter("radius", 40000);
+            request.AddParameter("radius", radius);
             request.AddParameter("latitude", lat);
             request.AddParameter("longitude", lon);
 

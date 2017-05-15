@@ -27,20 +27,45 @@ namespace Routey.Controllers
             return View();
         }
 
-        public IActionResult GetLocations(string auto, string Command)
+        public IActionResult NoResult()
         {
-            Debug.WriteLine(Command);
+            return View();
+        }
 
-            if(Command == "submit")
-            {
+
+        public IActionResult GetLocations(string auto, string radius)
+        {
+                Debug.WriteLine(radius);
+
+                int radiusInt = 0;
+                if (radius == null)
+                {
+                    radiusInt = 16000;
+                } else
+                {
+                    radiusInt = Int32.Parse(radius);
+                }
+
+                Debug.WriteLine(radiusInt);
+
                 var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
                 var originLatitiude = thisPlace.Latitude;
                 var originLongitude = thisPlace.Longitude;
-                var allLocationsYelp = YelpPlace.GetLocations(auto, originLatitiude, originLongitude);
-                var allLocationsGoogle = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude);
-                var allLocations = allLocationsYelp;
-                allLocations.AddRange(allLocationsGoogle);
-                Debug.WriteLine(allLocations);
+                var allLocations = new List<Location>();
+                if(radiusInt > 40000)
+                {
+                    var allLocationsYelp = YelpPlace.GetLocationsExtend(auto, originLatitiude, originLongitude);
+                    var allLocationsGoogle = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude, radiusInt);
+                    allLocations = allLocationsYelp;
+                    allLocations.AddRange(allLocationsGoogle);
+                } else
+                {
+                    var allLocationsYelp = YelpPlace.GetLocations(auto, originLatitiude, originLongitude, radiusInt);
+                    var allLocationsGoogle = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude, radiusInt);
+                    allLocations = allLocationsYelp;
+                    allLocations.AddRange(allLocationsGoogle);
+                }
+
                 if (allLocations.Count > 0)
                 {
                     return PartialView(allLocations);
@@ -50,45 +75,60 @@ namespace Routey.Controllers
                 {
                     return RedirectToAction("NoResult");
                 }
-            } else if(Command == "extend")
-            {
-                var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
-                var originLatitiude = thisPlace.Latitude;
-                var originLongitude = thisPlace.Longitude;
-                var allLocations = GoogleAuto.GetGoogleAddressExtend(auto, originLatitiude, originLongitude);
-                Debug.WriteLine(allLocations);
-                if (allLocations.Count > 0)
-                {
-                    return PartialView(allLocations);
 
-                }
-                else
-                {
-                    return RedirectToAction("NoResultExtend");
-                }
+        }
+
+
+        public IActionResult GetOriginLocations(string auto, string radius)
+        {
+            Debug.WriteLine(radius);
+
+            int radiusInt = 0;
+            if (radius == null)
+            {
+                radiusInt = 16000;
+            }
+            else
+            {
+                radiusInt = Int32.Parse(radius);
             }
 
-            return RedirectToAction("Error");
+            Debug.WriteLine(radiusInt);
 
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
+            var originLatitiude = thisPlace.Latitude;
+            var originLongitude = thisPlace.Longitude;
+            var allLocations = new List<Location>();
+            if (radiusInt > 40000)
+            {
+                var allLocationsYelp = YelpPlace.GetLocationsExtend(auto, originLatitiude, originLongitude);
+                var allLocationsGoogle = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude, radiusInt);
+                allLocations = allLocationsYelp;
+                allLocations.AddRange(allLocationsGoogle);
+            }
+            else
+            {
+                var allLocationsYelp = YelpPlace.GetLocations(auto, originLatitiude, originLongitude, radiusInt);
+                var allLocationsGoogle = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude, radiusInt);
+                allLocations = allLocationsYelp;
+                allLocations.AddRange(allLocationsGoogle);
+            }
+
+            if (allLocations.Count > 0)
+            {
+                return PartialView(allLocations);
+
+            }
+            else
+            {
+                return RedirectToAction("NoResult");
+            }
 
         }
 
-        public IActionResult NoResult()
-        {
-
-            return PartialView();
-        }
-
-        public IActionResult NoResultExtend()
-        {
-
-            return PartialView();
-        }
-
-        public IActionResult AddLocation(string name, string address, string city, string state, string zip, string latitude, string longitude)
-        {
-            
-            string locationType = "W";
+        public IActionResult AddLocation(string name, string address, string city, string state, string zip, string latitude, string longitude, string locationType)
+        {   
+            string thisLocationType = "W";
 
             Location newLocation = new Location(name, address, city, state, zip, latitude, longitude,locationType, GlobalRoute.RouteId);
             newLocation.apiAddress();
@@ -115,7 +155,7 @@ namespace Routey.Controllers
             return Json(allAuto);
         }
 
-        public IActionResult GetGoogleAuto(string term)
+        public IActionResult GetAddressAuto(string term)
         {
             var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
             var originLatitiude = thisPlace.Latitude;
@@ -125,30 +165,9 @@ namespace Routey.Controllers
         }
 
 
-        public IActionResult SetGoogleAddress(string auto)
-        {
-            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
-            var originLatitiude = thisPlace.Latitude;
-            var originLongitude = thisPlace.Longitude;
-            var Check = GoogleAuto.GetGoogleAddressAuto(auto, originLatitiude, originLongitude);
-            if (Check.Count > 0)
-            {
-                var thisLocation = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude);
-                var newLocation = GoogleLatLng.GetLatLng(thisLocation[0].Address, thisLocation[0].City, thisLocation[0].State);
-                newLocation.RouteId = GlobalRoute.RouteId;
-                newLocation.LocationType = "W";
 
-                db.Locations.Add(newLocation);
-                db.SaveChanges();
-                return Json(newLocation);
-            }
-            else {
-                bool noSubmit = false;
 
-                return Json(noSubmit);
-            } 
-        }
-
+       
         public IActionResult OriginDestQ(string Origin)
         {
             Debug.WriteLine(Origin);

@@ -11,6 +11,7 @@
         $("#route").hide();
         $("#done").hide();
         $("#extendShow").hide();
+        $("#radius").selectmenu();
 
         $("#auto").autocomplete({
             source: function (request, response) {
@@ -24,10 +25,7 @@
                     success: function (result) {
                         response(result);
                         $("#submitErrand").show();
-                        $("#extend").hide();
-                        $("#extendShow").hide();
-                        $("#extend").removeClass("Command");
-                        $("#submitErrand").addClass("Command");
+
                     }
                 });
             },
@@ -52,10 +50,7 @@
                 $.ajax({
                     type: 'GET',
                     dataType: 'html',
-                    data: {
-                        auto: $("#auto").val(),
-                        Command: $(".Command").val()
-                    },
+                    data: $(this).serialize(),
                     url: '@Url.Action("GetLocations")',
                     success: function (result) {
                         $("#log").show();
@@ -63,7 +58,48 @@
                     }
                 });
             });
-
+        $("#autoEndAddress").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetAddressAuto")',
+                    dataType: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function (result) {
+                        response(result);
+                    }
+                });
+            },
+            minLength: 2,
+            select: function (event, ui) {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'html',
+                    data: {
+                        auto: ui.item.value
+                    },
+                    url: '@Url.Action("GetOriginLocations")',
+                    success: function (result) {
+                        $("#log").show();
+                        $('#log').html(result);
+                    }
+                });
+            }
+        });
+            $("#newDest").submit(function(event){
+                event.preventDefault();
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'html',
+                    data: $(this).serialize(),
+                    url: '@Url.Action("GetOriginLocations")',
+                    success: function (result) {
+                        $("#log").show();
+                        $('#log').html(result);
+                    }
+                });
+            });
         $("#newOrigin").submit(function (event) {
             event.preventDefault();
             $.ajax({
@@ -77,9 +113,6 @@
                     $(".ui-widget").show();
                     $(".ui-widgetb").show();
                     $("#newOrigin").hide();
-                    $("#extend").hide();
-                    $("#extend").removeClass("Command");
-                    $("#submitErrand").addClass("Command");
                     $('#origin').html(resultStringOrigin);
 
                 }
@@ -123,18 +156,29 @@
 
         <button type="submit">Submit</button>
     </form>
+    <form id="newDest">
+        <label for="auto">Add where are you ending your Errands?</label>
+        <input id="autoEndAddress" name="auto">
+        <button type="submit">Submit</button>
+    </form>
 
     <div class="ui-widget">
         <form id="auto2">
-            <label for="auto">Add an Errand Business Stop!</label>
+            <label for="auto">Add a Stop!</label>
             <input id="auto" name="auto"> 
-            <button id="submitErrand" type="submit" class="Command" value="submit">Submit</button>
-            <button type="submit" id="extend" value="extend">Extend Search Radius</button>
-
+            <label for="radius">Search Distance (miles)</label>
+            <select name="radius" id="radius">
+                <option Value="8000">5</option>
+                <option Value="16000" selected="selected">10</option>
+                <option Value="40000">25</option>
+                <option Value="80500">50</option>
+                <option Value="161000">100</option>
+            </select>
+            <button id="submitErrand" type="submit">Submit</button>
         </form>
     </div>
 
-    <div id="extendShow">No Results...Try a different term</div>
+    <div id="extendShow">No Results...</div>
     @*<div class="ui-widgetb">
         <form id="auto2b">
             <label for="autob">Add an Address Stop!</label>
@@ -144,17 +188,13 @@
     </div>*@
     <div id="log"></div>
 
-
+   
     <div id="origin"></div>
+    <div id="destinationDiv">
+        <h5>Destination</h5>
+        <p id="destination"></p>
+    </div>
     <div id="route" class="row"><hr /><h5>Locations: </h5></div>
-
-
-
-
-        
-    
-
-
     <div id="done">
         Done with your route?
         <form id="endRoute">
