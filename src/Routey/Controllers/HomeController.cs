@@ -32,8 +32,24 @@ namespace Routey.Controllers
             return View();
         }
 
+        public IActionResult DestinationQ(string dest)
+        {
 
-        public IActionResult GetLocations(string auto, string radius)
+            var thisRoute = db.Routes.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId);
+            thisRoute.DestinationType = dest;
+            db.Entry(thisRoute).State = EntityState.Modified;
+            db.SaveChanges();
+            if (dest == "D"){
+                
+                return Json(true);
+            } else{
+
+                return Json(false);
+            }
+        }
+
+
+        public IActionResult GetLocations(string auto, string radius, string locationType)
         {
                 Debug.WriteLine(radius);
 
@@ -65,8 +81,11 @@ namespace Routey.Controllers
                     allLocations = allLocationsYelp;
                     allLocations.AddRange(allLocationsGoogle);
                 }
-
-                if (allLocations.Count > 0)
+                foreach (Location place in allLocations)
+                {
+                    place.LocationType = locationType;
+                }
+            if (allLocations.Count > 0)
                 {
                     return PartialView(allLocations);
 
@@ -78,59 +97,19 @@ namespace Routey.Controllers
 
         }
 
-
-        public IActionResult GetOriginLocations(string auto, string radius)
-        {
-            Debug.WriteLine(radius);
-
-            int radiusInt = 0;
-            if (radius == null)
-            {
-                radiusInt = 16000;
-            }
-            else
-            {
-                radiusInt = Int32.Parse(radius);
-            }
-
-            Debug.WriteLine(radiusInt);
-
-            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
-            var originLatitiude = thisPlace.Latitude;
-            var originLongitude = thisPlace.Longitude;
-            var allLocations = new List<Location>();
-            if (radiusInt > 40000)
-            {
-                var allLocationsYelp = YelpPlace.GetLocationsExtend(auto, originLatitiude, originLongitude);
-                var allLocationsGoogle = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude, radiusInt);
-                allLocations = allLocationsYelp;
-                allLocations.AddRange(allLocationsGoogle);
-            }
-            else
-            {
-                var allLocationsYelp = YelpPlace.GetLocations(auto, originLatitiude, originLongitude, radiusInt);
-                var allLocationsGoogle = GoogleAuto.GetGoogleAddress(auto, originLatitiude, originLongitude, radiusInt);
-                allLocations = allLocationsYelp;
-                allLocations.AddRange(allLocationsGoogle);
-            }
-
-            if (allLocations.Count > 0)
-            {
-                return PartialView(allLocations);
-
-            }
-            else
-            {
-                return RedirectToAction("NoResult");
-            }
-
-        }
-
         public IActionResult AddLocation(string name, string address, string city, string state, string zip, string latitude, string longitude, string locationType)
-        {   
-            string thisLocationType = "W";
+        {
+            string thisLocationType = "";
+            if(locationType == null)
+            {
+                thisLocationType = "W";
+            } else
+            {
+                thisLocationType = locationType;
+            }
+             
 
-            Location newLocation = new Location(name, address, city, state, zip, latitude, longitude,locationType, GlobalRoute.RouteId);
+            Location newLocation = new Location(name, address, city, state, zip, latitude, longitude, thisLocationType, GlobalRoute.RouteId);
             newLocation.apiAddress();
             Debug.WriteLine(newLocation);
             db.Locations.Add(newLocation);
@@ -163,9 +142,6 @@ namespace Routey.Controllers
             var allAuto = GoogleAuto.GetGoogleAddressAuto(term, originLatitiude, originLongitude);
             return Json(allAuto);
         }
-
-
-
 
        
         public IActionResult OriginDestQ(string Origin)

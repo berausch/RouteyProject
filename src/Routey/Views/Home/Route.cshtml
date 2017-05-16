@@ -12,6 +12,8 @@
         $("#done").hide();
         $("#extendShow").hide();
         $("#radius").selectmenu();
+        $("#newDest").hide();
+        $("#destQ").hide();
 
         $("#auto").autocomplete({
             source: function (request, response) {
@@ -37,7 +39,7 @@
                     data: {
                         auto: ui.item.value
                     },
-                    url: '@Url.Action("GetLocations")',
+                    url: '@Url.Action("GetAddressAuto")',
                     success: function (result) {
                         $("#log").show();
                         $('#log').html(result);
@@ -79,7 +81,7 @@
                     data: {
                         auto: ui.item.value
                     },
-                    url: '@Url.Action("GetOriginLocations")',
+                    url: '@Url.Action("GetLocations")',
                     success: function (result) {
                         $("#log").show();
                         $('#log').html(result);
@@ -87,19 +89,19 @@
                 });
             }
         });
-            $("#newDest").submit(function(event){
-                event.preventDefault();
-                $.ajax({
-                    type: 'GET',
-                    dataType: 'html',
-                    data: $(this).serialize(),
-                    url: '@Url.Action("GetOriginLocations")',
-                    success: function (result) {
-                        $("#log").show();
-                        $('#log').html(result);
-                    }
-                });
+        $("#newDest").submit(function(event){
+            event.preventDefault();
+            $.ajax({
+                type: 'GET',
+                dataType: 'html',
+                data: $(this).serialize(),
+                url: '@Url.Action("GetDestLocations")',
+                success: function (result) {
+                    $("#log").show();
+                    $('#log').html(result);
+                }
             });
+        });
         $("#newOrigin").submit(function (event) {
             event.preventDefault();
             $.ajax({
@@ -110,11 +112,33 @@
                 success: function (result) {
                     var resultStringOrigin = "<br /><hr><h5>Start:</h5> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
                     console.log(result);
-                    $(".ui-widget").show();
-                    $(".ui-widgetb").show();
                     $("#newOrigin").hide();
+                    $("#destQ").show();
                     $('#origin').html(resultStringOrigin);
 
+                }
+            });
+            });
+
+        $("#destQ").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                data: $(this).serialize(),
+                url: '@Url.Action("DestinationQ")',
+                success: function (result) {
+                    if (result == true) {
+                        $("#newDest").show();
+                        $("#destQ").hide();
+
+                    } else {
+                        
+                        console.log(result);
+                        $(".ui-widget").show();
+                        $("#destQ").hide();
+
+                    }
                 }
             });
         });
@@ -156,10 +180,32 @@
 
         <button type="submit">Submit</button>
     </form>
-    <form id="newDest">
-        <label for="auto">Add where are you ending your Errands?</label>
-        <input id="autoEndAddress" name="auto">
+    <form id="destQ">
+        <h4>What's your Destination?</h4>
+        
+        <input class="radio" type="radio" name="dest" value="OD" id="radio1"checked />
+        <label for="radio1">Same as Start</label>
+        <input class="radio" type="radio" name="dest" value="D" id="radio2"/>
+        <label for="radio2">Different then Start</label>
+        <input class="radio" type="radio" name="dest" value="W" id="radio3"/>
+        <label for="radio3">Not sure/Doesn't Matter</label>
+        <br />
+        <br />
         <button type="submit">Submit</button>
+    </form>
+    <form id="newDest">
+        <label for="auto"><h5>Add Destination Address</h5></label>
+        <input id="auto" name="auto">
+        <label for="radius">Search Distance (miles)</label>
+        <select name="radius" id="radius">
+            <option Value="8000">5</option>
+            <option Value="16000" selected="selected">10</option>
+            <option Value="40000">25</option>
+            <option Value="80500">50</option>
+            <option Value="161000">100</option>
+        </select>
+        <input type="hidden" name="locationType" value="D" />
+        <button id="submitErrand" type="submit">Submit</button>
     </form>
 
     <div class="ui-widget">
@@ -174,6 +220,7 @@
                 <option Value="80500">50</option>
                 <option Value="161000">100</option>
             </select>
+            <input type="hidden" name="locationType" value="W" />
             <button id="submitErrand" type="submit">Submit</button>
         </form>
     </div>
