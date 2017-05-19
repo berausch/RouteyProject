@@ -19,14 +19,14 @@ namespace Routey.Models
         public string Description { get; set; }
 
         public string Status { get; set; }
+        
+        public Address1 Structured_formatting { get; set; }
 
-        public Address1 structured_formatting { get; set; }
-
-        public string place_id { get; set; }
+        public string Place_id { get; set; }
         public class Address1
         {
-            public string main_text { get; set; }
-            public string secondary_text { get; set; }
+            public string Main_text { get; set; }
+            public string Secondary_text { get; set; }
         }
 
         public string City { get; set; }
@@ -57,8 +57,8 @@ namespace Routey.Models
             List<Location> thisLocationList = new List<Location>();
             if(status == "OK")
             {
-                var secondLine = autoGoogleList[0].structured_formatting.secondary_text.Split(',');
-                Location thisLocation = new Location("Address", autoGoogleList[0].structured_formatting.main_text, secondLine[0], secondLine[1].Remove(0, 1), autoGoogleList[0].place_id);
+                var secondLine = autoGoogleList[0].Structured_formatting.Secondary_text.Split(',');
+                Location thisLocation = new Location("Address", autoGoogleList[0].Structured_formatting.Main_text, secondLine[0], secondLine[1].Remove(0, 1), autoGoogleList[0].Place_id);
                 var LatLangLocation = GoogleLatLng.GetLatLng(thisLocation.Address, thisLocation.City, thisLocation.State);
                 thisLocation.Latitude = LatLangLocation.Latitude;
                 thisLocation.Longitude = LatLangLocation.Longitude;

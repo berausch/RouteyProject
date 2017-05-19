@@ -15,7 +15,7 @@ namespace Routey.Models
     {
         public string Name { get; set; }
 
-        public string text { get; set; }
+        public string Text { get; set; }
 
 
         public static List<string> GetAutocompleteBusinesses(string userInput, string lat, string lon)
@@ -63,7 +63,7 @@ namespace Routey.Models
             var autoList1 = JsonConvert.DeserializeObject<List<YelpAuto>>(jsonResponse["terms"].ToString());
 
 
-            List<string> autoList = autoList1.Select(s => s.text).ToList();
+            List<string> autoList = autoList1.Select(s => s.Text).ToList();
 
             return autoList;
         }

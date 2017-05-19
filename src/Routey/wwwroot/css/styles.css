@@ -3,3 +3,22 @@
     height: 400px;
     background-color: grey;
 }
+
+.cardOriginDestBackground {
+    background-color: #177E89;
+}
+
+.cardOriginDestText {
+    color: #F6AE2D;
+    font-weight: bold;
+}
+
+.cardErrandBackground {
+    background-color: #084C61;
+}
+
+.cardErrandText {
+    color: #F6AE2D;
+    font-weight: bold;
+}
+

@@ -19,6 +19,8 @@
         $("#loaderDest").hide();
         $("#loaderErrand").hide();
         $("#destinationDiv").hide();
+        $("#originCard").hide();
+        $("#destCard").hide();
 
 
         $("#auto").autocomplete({
@@ -127,11 +129,12 @@
                         $("#noResult").show();
                     } else {
 
-                        var resultStringOrigin = "<br /><hr><h5>Start:</h5> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
+                        var resultStringOrigin = "<p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
                         console.log(result);
                         $("#newOrigin").hide();
+                        $("#originCard").show();
                         $("#destQ").show();
-                        $('#originDest').html(resultStringOrigin);
+                        $('#origin').html(resultStringOrigin);
                     }
                     
 
@@ -179,9 +182,7 @@
     });
      
 </script>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBniQDIBB4eoG7DLjs29N0Hm2bZRiJJrVA&callback=initMap">
-</script>
+
 
 
 
@@ -241,7 +242,7 @@
         </div>
     </div>
     <form id="newDest">
-        <label for="autoDest"><h5>Add Destination Address</h5></label>
+        <label for="autoDest">Add Destination Address</label>
         <input id="autoDest" name="autoDest">
         <div id="noResultDest">
             <label for="radiusDest">Search Distance (miles)</label>
@@ -298,10 +299,33 @@
 
     <div id="noResult">No Results...</div>
     <div id="log"></div>
-
-   
+    <div class="row">
+        <div class="col s6 m6" id="originCard">
+            <div class="card cardOriginDestBackground" >
+                <div class="card-content cardOriginDestText" >
+                    <span class="card-title">Start</span>
+                    <div id="origin">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s6 m6" id="destCard">
+            <div class="card cardOriginDestBackground ">
+                <div class="card-content cardOriginDestText">
+                    <span class="card-title">Destination</span>
+                    <div id="dest">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="originDest"></div>
-    <div id="route" class="row"><hr /><h5>Locations: </h5></div>
+    <div id="route">
+    <hr />
+    <h5>Locations: </h5>
+        <div id="errandAppend"  class="row">
+        </div>
+    </div>
     <div id="done">
         Done with your route?
         <form id="endRoute">

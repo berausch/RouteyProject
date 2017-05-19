@@ -17,7 +17,7 @@ namespace Routey.Models
     public class GoogleOptimize
     {
       
-        public List<int> waypoint_order { get; set; }
+        public List<int> Waypoint_order { get; set; }
 
         public static List<int> GetGoogleOrder(Location origin, Location destination, List<Location> waypoints)
         {
@@ -50,7 +50,7 @@ namespace Routey.Models
             }).Wait();
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
             var optimizeList = JsonConvert.DeserializeObject<List<GoogleOptimize>>(jsonResponse["routes"].ToString());
-            List<int> thisLocationList = optimizeList[0].waypoint_order;
+            List<int> thisLocationList = optimizeList[0].Waypoint_order;
 
             return thisLocationList;
         }

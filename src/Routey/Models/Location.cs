@@ -120,7 +120,7 @@ namespace Routey.Models
             RouteId = routeId;
         }
 
-        public void apiAddress()
+        public void ApiAddress()
         {
             string addressNoSpace = Address.Replace(" ", "+");
             string cityNoSpace = City.Replace(" ", "+");
@@ -133,7 +133,7 @@ namespace Routey.Models
            
         }
 
-        public void apiName()
+        public void ApiName()
         {
             string nameNoSpace = Name.Replace(" ", "+");
             NameConcat = nameNoSpace;

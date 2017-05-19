@@ -40,7 +40,7 @@ namespace Routey
             
             services.AddEntityFramework()
                 .AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+                    options.UseSqlServer("Data Source=tcp:routey3dbserver.database.windows.net,1433;Initial Catalog=Routey3_db;User Id=berausch@routey3dbserver;Password=haPPy631"));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();

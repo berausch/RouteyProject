@@ -36,7 +36,7 @@ namespace Routey.Models
             request.AddHeader("cache-control", "no-cache");
 
             Location thisLocation = new Location(address, city, state);
-            thisLocation.apiAddress();
+            thisLocation.ApiAddress();
             request.AddParameter("address", thisLocation.AddressConcat);
 
             var response = new RestResponse();

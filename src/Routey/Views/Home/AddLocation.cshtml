@@ -6,14 +6,25 @@
         $("#done").show();
     });
 </script>
-
-<div class="col s3">
-    @if (Model.LocationType == "D")
-    {
-        <h5>Destination</h5>
-
-    }
-    <p>@Html.DisplayFor(model => model.Name)</p>
+@if (Model.LocationType == "D")
+{
     <p>@Html.DisplayFor(model => model.Address)</p>
     <p>@Html.DisplayFor(model => model.City), @Html.DisplayFor(model => model.State) @Html.DisplayFor(model => model.Zip)</p>
-</div>
+
+}
+else
+{
+    <div class="col s4 m4">
+        <div class="card cardErrandBackground">
+            <div class="card-content cardErrandText">
+                <span class="card-title">@Html.DisplayFor(model => model.Name)</span>
+                <div>
+
+                    <p>@Html.DisplayFor(model => model.Address)</p>
+                    <p>@Html.DisplayFor(model => model.City), @Html.DisplayFor(model => model.State) @Html.DisplayFor(model => model.Zip)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

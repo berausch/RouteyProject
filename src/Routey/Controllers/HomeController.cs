@@ -173,8 +173,8 @@ namespace Routey.Controllers
              
 
             Location newLocation = new Location(name, address, city, state, zip, latitude, longitude, thisLocationType, GlobalRoute.RouteId);
-            newLocation.apiAddress();
-            newLocation.apiName();
+            newLocation.ApiAddress();
+            newLocation.ApiName();
             Debug.WriteLine(newLocation);
             db.Locations.Add(newLocation);
             db.SaveChanges();
@@ -236,7 +236,7 @@ namespace Routey.Controllers
                 newLocation.LocationType = locationType;
                 newLocation.RouteId = GlobalRoute.RouteId;
                 newLocation.Name = "Origin";
-                newLocation.apiName();
+                newLocation.ApiName();
                 db.SaveChanges();
 
                 db.Locations.Add(newLocation);
