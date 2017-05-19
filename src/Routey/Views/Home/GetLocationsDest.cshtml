@@ -21,11 +21,13 @@
                 data: $(this).serialize(),
                 url: '@Url.Action("AddLocation")',
                 success: function (result) {
-                    console.log(result);
-                    $('#modal1').dialog('destroy');
-                    $("#log").hide();
-                    $("#route").show();
-                    $('#route').append(result);
+                        $("#newDest").hide();
+                        $(".ui-widget").show();
+                        $("#destinationDiv").show();
+                        $('#modal1').dialog('destroy');
+                        $("#log").hide();
+                        $("#autoDest").autocomplete("destroy");
+                        $('#destination').html(result);
                 }
             });
         });
@@ -41,6 +43,7 @@
                 <p>@Html.DisplayFor(modelItem => Place.Name)</p>
 
              }
+            @ViewBag.thisLocationType;
             <p>@Html.DisplayFor(modelItem => Place.Address)</p>
             <p>@Html.DisplayFor(modelItem => Place.City), @Html.DisplayFor(modelItem => Place.State) @Html.DisplayFor(modelItem => Place.Zip)</p>
             <form class="addThisLocation">

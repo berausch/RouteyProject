@@ -7,13 +7,19 @@
 <script>
     $(document).ready(function () {
         $(".ui-widget").hide();
-        $(".ui-widgetb").hide();
         $("#route").hide();
         $("#done").hide();
-        $("#extendShow").hide();
+        $("#noResult").hide();
+        $("#radiusDest").selectmenu();
         $("#radius").selectmenu();
         $("#newDest").hide();
         $("#destQ").hide();
+        $("#loaderOrigin").hide();
+        $("#loaderDestQ").hide();
+        $("#loaderDest").hide();
+        $("#loaderErrand").hide();
+        $("#destinationDiv").hide();
+
 
         $("#auto").autocomplete({
             source: function (request, response) {
@@ -25,11 +31,12 @@
                         term: request.term
                     },
                     success: function (result) {
+                        $("#noResultErrand").show();
+                        $("#noResult").hide();
                         response(result);
-                        $("#submitErrand").show();
 
                     }
-                });
+               });
             },
             minLength: 2,
             select: function (event, ui) {
@@ -37,9 +44,10 @@
                     type: 'GET',
                     dataType: 'html',
                     data: {
-                        auto: ui.item.value
+                        auto: ui.item.value,
+                        locationType: "W"
                     },
-                    url: '@Url.Action("GetAddressAuto")',
+                    url: '@Url.Action("GetLocations")',
                     success: function (result) {
                         $("#log").show();
                         $('#log').html(result);
@@ -47,31 +55,34 @@
                 });
             }
         });
-            $("#auto2").submit(function(event){
-                event.preventDefault();
-                $.ajax({
-                    type: 'GET',
-                    dataType: 'html',
-                    data: $(this).serialize(),
-                    url: '@Url.Action("GetLocations")',
-                    success: function (result) {
-                        $("#log").show();
-                        $('#log').html(result);
-                    }
-                });
+        $("#newErrand").submit(function(event){
+            event.preventDefault();
+            $.ajax({
+                type: 'GET',
+                dataType: 'html',
+                data: $(this).serialize(),
+                url: '@Url.Action("GetLocations")',
+                success: function (result) {
+                    $("#log").show();
+                    $('#log').html(result);
+                }
             });
-        $("#autoEndAddress").autocomplete({
+        });
+        $("#autoDest").autocomplete({
             source: function (request, response) {
+
                 $.ajax({
-                    url: '@Url.Action("GetAddressAuto")',
+                    url: '@Url.Action("GetAuto")',
                     dataType: "json",
                     data: {
                         term: request.term
                     },
                     success: function (result) {
                         response(result);
+                        $("#noResultDest").show();
+                        $("#noResult").hide();
                     }
-                });
+               });
             },
             minLength: 2,
             select: function (event, ui) {
@@ -79,9 +90,10 @@
                     type: 'GET',
                     dataType: 'html',
                     data: {
-                        auto: ui.item.value
+                        autoDest: ui.item.value,
+                        locationType: "D"
                     },
-                    url: '@Url.Action("GetLocations")',
+                    url: '@Url.Action("GetLocationsDest")',
                     success: function (result) {
                         $("#log").show();
                         $('#log').html(result);
@@ -95,7 +107,7 @@
                 type: 'GET',
                 dataType: 'html',
                 data: $(this).serialize(),
-                url: '@Url.Action("GetDestLocations")',
+                url: '@Url.Action("GetLocationsDest")',
                 success: function (result) {
                     $("#log").show();
                     $('#log').html(result);
@@ -118,7 +130,7 @@
 
                 }
             });
-            });
+        });
 
         $("#destQ").submit(function (event) {
             event.preventDefault();
@@ -133,7 +145,7 @@
                         $("#destQ").hide();
 
                     } else {
-                        
+
                         console.log(result);
                         $(".ui-widget").show();
                         $("#destQ").hide();
@@ -158,7 +170,13 @@
             });
         });
     });
+     
 </script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBniQDIBB4eoG7DLjs29N0Hm2bZRiJJrVA&callback=initMap">
+</script>
+
+
 
 
 <div class="container">
@@ -180,6 +198,17 @@
 
         <button type="submit">Submit</button>
     </form>
+    <div class="preloader-wrapper big active" id="loaderOrigin">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
     <form id="destQ">
         <h4>What's your Destination?</h4>
         
@@ -193,46 +222,74 @@
         <br />
         <button type="submit">Submit</button>
     </form>
+    <div class="preloader-wrapper big active" id="loaderDestQ">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
     <form id="newDest">
-        <label for="auto"><h5>Add Destination Address</h5></label>
-        <input id="auto" name="auto">
-        <label for="radius">Search Distance (miles)</label>
-        <select name="radius" id="radius">
-            <option Value="8000">5</option>
-            <option Value="16000" selected="selected">10</option>
-            <option Value="40000">25</option>
-            <option Value="80500">50</option>
-            <option Value="161000">100</option>
-        </select>
-        <input type="hidden" name="locationType" value="D" />
-        <button id="submitErrand" type="submit">Submit</button>
-    </form>
-
-    <div class="ui-widget">
-        <form id="auto2">
-            <label for="auto">Add a Stop!</label>
-            <input id="auto" name="auto"> 
-            <label for="radius">Search Distance (miles)</label>
-            <select name="radius" id="radius">
+        <label for="autoDest"><h5>Add Destination Address</h5></label>
+        <input id="autoDest" name="autoDest">
+        <div id="noResultDest">
+            <label for="radiusDest">Search Distance (miles)</label>
+            <select name="radiusDest" id="radiusDest">
                 <option Value="8000">5</option>
                 <option Value="16000" selected="selected">10</option>
                 <option Value="40000">25</option>
                 <option Value="80500">50</option>
                 <option Value="161000">100</option>
             </select>
-            <input type="hidden" name="locationType" value="W" />
-            <button id="submitErrand" type="submit">Submit</button>
-        </form>
+            <button type="submit" class="submitAddress" id="submitDest">Submit</button>
+        </div>
+    </form>
+    <div class="preloader-wrapper big active" id="loaderDest">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
     </div>
 
-    <div id="extendShow">No Results...</div>
-    @*<div class="ui-widgetb">
-        <form id="auto2b">
-            <label for="autob">Add an Address Stop!</label>
-            <input id="autob" name="autob">
-            <button class="submitErrand" type="submit">Submit</button>
-        </form>
-    </div>*@
+    <div class="ui-widget">
+        <form id="newErrand">
+            <label for="auto">Add a Stop!</label>
+            <input id="auto" name="auto"> 
+            <div id="noResultErrand">
+                <label for="radius">Search Distance (miles)</label>
+                <select name="radius" id="radius">
+                    <option Value="8000">5</option>
+                    <option Value="16000" selected="selected">10</option>
+                    <option Value="40000">25</option>
+                    <option Value="80500">50</option>
+                    <option Value="161000">100</option>
+                </select>
+                <button class="submitAddress" type="submit">Submit</button>
+            </div>
+</form>
+    </div>
+    <div class="preloader-wrapper big active"  id="loaderErrand">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="noResult">No Results...</div>
     <div id="log"></div>
 
    
@@ -251,6 +308,3 @@
     </div>
 
  </div>
-
-
-

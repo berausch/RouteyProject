@@ -3,6 +3,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3>Create a New Route!</h3>
+<script>
+    $(document).ready(function () {
+        $(".loader").hide();
+        $("#createRoute").click(function(event) {
+            $(".loader").show();
 
-@Html.ActionLink("Create a New Route!", "Route")
+        });
+    });
+</script>
+
+<h3>Create a New Route!</h3>
+<div id="createRoute">
+    @Html.ActionLink("Create a New Route!", "Route")
+</div>
+
+<div class="preloader-wrapper big active loader">
+    <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+            <div class="circle"></div>
+        </div><div class="gap-patch">
+            <div class="circle"></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+    </div>
+</div>

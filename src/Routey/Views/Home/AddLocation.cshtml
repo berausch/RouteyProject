@@ -1,6 +1,12 @@
 ﻿
 @model Routey.Models.Location
 
+<script>
+    $(document).ready(function () {
+        $("#done").show();
+    });
+</script>
+
 <div class="col s3">
     <p>@Html.DisplayFor(model => model.Name)</p>
     <p>@Html.DisplayFor(model => model.Address)</p>
