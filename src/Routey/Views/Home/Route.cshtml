@@ -122,11 +122,18 @@
                 data: $(this).serialize(),
                 url: '@Url.Action("CreateNewOrigin")',
                 success: function (result) {
-                    var resultStringOrigin = "<br /><hr><h5>Start:</h5> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
-                    console.log(result);
-                    $("#newOrigin").hide();
-                    $("#destQ").show();
-                    $('#origin').html(resultStringOrigin);
+                    if (result == false)
+                    {
+                        $("#noResult").show();
+                    } else {
+
+                        var resultStringOrigin = "<br /><hr><h5>Start:</h5> <p>" + result.address + "</p><p>" + result.city + ", " + result.state + "</p>";
+                        console.log(result);
+                        $("#newOrigin").hide();
+                        $("#destQ").show();
+                        $('#originDest').html(resultStringOrigin);
+                    }
+                    
 
                 }
             });
@@ -163,7 +170,7 @@
                 url: '@Url.Action("EndRoute")',
                 success: function (result) {
                     console.log(result);
-                    var resultLink = '<a href="' + result + '">Map Link</a>';
+                    var resultLink = '<a target="_blank" href="' + result + '">Map Link</a>';
                     $('#mapLink').html(resultLink);
 
                 }
@@ -293,11 +300,7 @@
     <div id="log"></div>
 
    
-    <div id="origin"></div>
-    <div id="destinationDiv">
-        <h5>Destination</h5>
-        <p id="destination"></p>
-    </div>
+    <div id="originDest"></div>
     <div id="route" class="row"><hr /><h5>Locations: </h5></div>
     <div id="done">
         Done with your route?

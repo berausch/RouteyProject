@@ -161,6 +161,10 @@ namespace Routey.Controllers
             }
             if(thisLocationType == "D")
             {
+                if(name == null)
+                {
+                    name = "Destination";
+                }
                 var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
                 thisPlace.LocationType = "O";
                 db.Entry(thisPlace).State = EntityState.Modified;
@@ -170,6 +174,7 @@ namespace Routey.Controllers
 
             Location newLocation = new Location(name, address, city, state, zip, latitude, longitude, thisLocationType, GlobalRoute.RouteId);
             newLocation.apiAddress();
+            newLocation.apiName();
             Debug.WriteLine(newLocation);
             db.Locations.Add(newLocation);
             db.SaveChanges();
@@ -204,12 +209,6 @@ namespace Routey.Controllers
             return Json(allAuto);
         }
 
-       
-        public IActionResult OriginDestQ(string Origin)
-        {
-            Debug.WriteLine(Origin);
-            return Content(Origin);
-        }
 
         public IActionResult Route()
         {
@@ -228,23 +227,68 @@ namespace Routey.Controllers
             
             string locationType = "OD"; 
             var newLocation = GoogleLatLng.GetLatLng(originAddress, originCity, originState);
-            newLocation.LocationType = locationType;
-            newLocation.RouteId = GlobalRoute.RouteId;
-            newLocation.Name = "Origin";
-            db.SaveChanges();
 
-            db.Locations.Add(newLocation);
-            db.SaveChanges();
-            Debug.WriteLine(newLocation);
-            return Json(newLocation);
+            if(newLocation == null)
+            {
+                return Json(false);
+            } else
+            {
+                newLocation.LocationType = locationType;
+                newLocation.RouteId = GlobalRoute.RouteId;
+                newLocation.Name = "Origin";
+                newLocation.apiName();
+                db.SaveChanges();
+
+                db.Locations.Add(newLocation);
+                db.SaveChanges();
+                Debug.WriteLine(newLocation);
+                return Json(newLocation);
+            }
+            
         }
 
         public IActionResult EndRoute()
         {
             var mapLink = "https://www.google.com/maps/dir";
+            var thisRoute = db.Routes.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId);
+            var origin = new Location();
+            var destination = new Location();
+            var waypoints = new List<Location>();
+            if (thisRoute.DestinationType == "OD" || thisRoute.DestinationType == "W")
+            {
+                origin = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
+                destination = origin;
+                waypoints = db.Locations.Where(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "W").ToList();
+            } else
+            {
+                origin = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "O");
+                destination = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "D");
+                waypoints = db.Locations.Where(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "W").ToList();
+            }
+
+            var optimizedOrder = GoogleOptimize.GetGoogleOrder(origin, destination, waypoints);
+            var waypointsString = "";
+            for(var i=0; i < optimizedOrder.Count; i++)
+            {
+                if(i < (optimizedOrder.Count -1))
+                {
+                    waypointsString = waypointsString + waypoints[optimizedOrder[i]].NameConcat + "+" +waypoints[optimizedOrder[i]].AddressConcat + "/";
+                }
+                else
+                {
+                    waypointsString = waypointsString + waypoints[optimizedOrder[i]].AddressConcat;
+                }
+                
+            }
+
+            if(thisRoute.DestinationType == "W")
+            {
+                mapLink = mapLink + "/" + origin.AddressConcat + "/" + waypointsString;
+            } else
+            {
+                mapLink = mapLink + "/" + origin.AddressConcat + "/" + waypointsString + "/"+destination.AddressConcat;
+            }
             
-            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD" || p.LocationType == "O");
-            mapLink = mapLink + "/" + thisPlace.AddressConcat;
             return Json(mapLink);
         }
 

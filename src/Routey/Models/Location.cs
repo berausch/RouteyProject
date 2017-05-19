@@ -30,6 +30,7 @@ namespace Routey.Models
 
         public int RouteId { get; set; }
         public string AddressConcat { get; set; }
+        public string NameConcat { get; set; }
 
         public string GoogleId { get; set; }
         public string AddressDisplay { get; set; }
@@ -124,10 +125,19 @@ namespace Routey.Models
             string addressNoSpace = Address.Replace(" ", "+");
             string cityNoSpace = City.Replace(" ", "+");
             string stateNoSpace = State.Replace(" ", "+");
+
             string allAddress = addressNoSpace + "+" + cityNoSpace + "+" + stateNoSpace;
 
            AddressConcat = allAddress;
            
+           
+        }
+
+        public void apiName()
+        {
+            string nameNoSpace = Name.Replace(" ", "+");
+            NameConcat = nameNoSpace;
+
         }
 
 

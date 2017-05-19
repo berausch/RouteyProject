@@ -19,14 +19,14 @@ namespace Routey.Models
       
         public List<int> waypoint_order { get; set; }
 
-        public static List<int> GetGoogleAddress(Location origin, Location destination, List<Location> waypoints)
+        public static List<int> GetGoogleOrder(Location origin, Location destination, List<Location> waypoints)
         {
             var client = new RestClient("https://maps.googleapis.com/maps/api/directions/json?");
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             request.AddParameter("origin", origin.AddressConcat);
             request.AddParameter("destination", destination.AddressConcat);
-            string allWaypoints = "";
+            string allWaypoints = "optimize:true|";
             for(var i = 0; i < waypoints.Count; i++)
             {
                  if(i < (waypoints.Count-1))
@@ -49,8 +49,8 @@ namespace Routey.Models
                 response = await GetResponseContentAsync(client, request) as RestResponse;
             }).Wait();
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
-            var optimizeList = JsonConvert.DeserializeObject<GoogleOptimize>(jsonResponse["routes"].ToString());
-            List<int> thisLocationList = optimizeList.waypoint_order;
+            var optimizeList = JsonConvert.DeserializeObject<List<GoogleOptimize>>(jsonResponse["routes"].ToString());
+            List<int> thisLocationList = optimizeList[0].waypoint_order;
 
             return thisLocationList;
         }
