@@ -1,7 +1,5 @@
-﻿#map {
-    width: 100%;
-    height: 400px;
-    background-color: grey;
+﻿body {
+    color: #084C61;
 }
 
 .cardOriginDestBackground {
@@ -21,4 +19,10 @@
     color: #F6AE2D;
     font-weight: bold;
 }
+
+.logo {
+    width: 40%;
+}
+
+
 

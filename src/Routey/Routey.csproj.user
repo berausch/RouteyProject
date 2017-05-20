@@ -6,6 +6,6 @@
   <PropertyGroup>
     <ActiveDebugProfile>Routey</ActiveDebugProfile>
     <WebStackScaffolding_DependencyDialogWidth>600</WebStackScaffolding_DependencyDialogWidth>
-    <NameOfLastUsedPublishProfile>Routey3 - Web Deploy</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>Routey - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

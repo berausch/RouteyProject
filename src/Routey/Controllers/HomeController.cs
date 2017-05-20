@@ -212,7 +212,6 @@ namespace Routey.Controllers
 
         public IActionResult Route()
         {
-
             Route newRoute = new Route();
             db.Routes.Add(newRoute);
             db.SaveChanges();
