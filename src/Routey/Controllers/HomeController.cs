@@ -65,7 +65,7 @@ namespace Routey.Controllers
 
             Debug.WriteLine(radiusInt);
 
-            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD" || p.LocationType == "O");
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && (p.LocationType == "OD" || p.LocationType == "O"));
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
             var allLocations = new List<Location>();
@@ -115,7 +115,7 @@ namespace Routey.Controllers
 
             Debug.WriteLine(radiusInt);
 
-            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD" || p.LocationType == "O");
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && (p.LocationType == "OD" || p.LocationType == "O"));
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
             var allLocations = new List<Location>();
@@ -187,7 +187,7 @@ namespace Routey.Controllers
 
         public IActionResult GetAuto(string term)
        {
-            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD" || p.LocationType == "O");
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && (p.LocationType == "OD" || p.LocationType == "O"));
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
             var allAutoBiz = YelpAuto.GetAutocompleteBusinesses(term, originLatitiude, originLongitude);
@@ -202,7 +202,7 @@ namespace Routey.Controllers
 
         public IActionResult GetAddressAuto(string term)
         {
-            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD" || p.LocationType == "O");
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && (p.LocationType == "OD" || p.LocationType == "O"));
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
             var allAuto = GoogleAuto.GetGoogleAddressAuto(term, originLatitiude, originLongitude);
