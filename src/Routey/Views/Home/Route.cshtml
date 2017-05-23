@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "New Route";
+    ViewData["Title"] = "Route";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -21,7 +21,26 @@
         $("#destinationDiv").hide();
         $("#originCard").hide();
         $("#destCard").hide();
-
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    $.ajax({
+                        url: '@Url.Action("GetGeoLocation")',
+                        dataType: "json",
+                        data: {
+                            lat: position.coords.latitude,
+                            long: position.coords.longtiude
+                        },
+                        success: function (result) {
+                            var resultString = "<p>Latitude: " + result.Latitude + "</p><p>Longitude: " + result.Longtiude + "</p>"
+                            $('#test').html(resultString);
+                        }
+                    });
+                    
+                });
+            } else {
+                alert('Geo Location feature is not supported in this browser.');
+            }
+     
 
         $("#auto").autocomplete({
             source: function (request, response) {
@@ -136,7 +155,7 @@
                         $("#destQ").show();
                         $('#origin').html(resultStringOrigin);
                     }
-                    
+
 
                 }
             });
@@ -180,7 +199,7 @@
             });
         });
     });
-     
+
 </script>
 
 
@@ -325,6 +344,7 @@
         <div id="errandAppend"  class="row">
         </div>
     </div>
+    <div id="test"></div>
     <div id="done">
         Done with your route?
         <form id="endRoute">
