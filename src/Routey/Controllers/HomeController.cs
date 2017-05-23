@@ -291,12 +291,12 @@ namespace Routey.Controllers
             return Json(mapLink);
         }
 
-        public IActionResult GetGeoLocation(string lat, string lon)
-        {
-            Location currentPos = new Location(lat, lon);
+        //public IActionResult GetGeoLocation(string lat, string lon)
+        //{
+        //    Location currentPos = new Location(lat, lon);
 
-            return Json(currentPos);
-        }
+        //    return Json(currentPos);
+        //}
 
 
     }

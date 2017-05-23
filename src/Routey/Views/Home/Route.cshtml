@@ -21,25 +21,26 @@
         $("#destinationDiv").hide();
         $("#originCard").hide();
         $("#destCard").hide();
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
+        //Code for getting Geolocation from user, needs error catching 
+            @*if (navigator.geolocation) {
+                navigator.geolocation.getcurrentposition(function (position) {
                     $.ajax({
-                        url: '@Url.Action("GetGeoLocation")',
-                        dataType: "json",
+                        url: '@url.action("getgeolocation")',
+                        datatype: "json",
                         data: {
                             lat: position.coords.latitude,
                             long: position.coords.longtiude
                         },
                         success: function (result) {
-                            var resultString = "<p>Latitude: " + result.Latitude + "</p><p>Longitude: " + result.Longtiude + "</p>"
-                            $('#test').html(resultString);
+                            var resultstring = "<p>latitude: " + result.latitude + "</p><p>longitude: " + result.longtiude + "</p>"
+                            $('#test').html(resultstring);
                         }
                     });
                     
                 });
             } else {
-                alert('Geo Location feature is not supported in this browser.');
-            }
+                alert('geo location feature is not supported in this browser.');
+            }*@
      
 
         $("#auto").autocomplete({
@@ -214,13 +215,13 @@
     <form id="newOrigin">
         <h5>Create a Starting Point</h5>
         <label for="originAddress">Street Address</label>
-        <input id="originAddress" name="originAddress">
+        <input id="originAddress" name="originAddress" required>
 
         <label for="originCity">City</label>
-        <input id="originCity" name="originCity">
+        <input id="originCity" name="originCity" required>
 
         <label for="originState">State Abbreviation</label>
-        <input id="originState" name="originState">
+        <input id="originState" name="originState" required>
 
         <button type="submit">Submit</button>
     </form>
