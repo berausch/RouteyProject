@@ -47,14 +47,23 @@ namespace Routey.Models
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
             var newLatLng = JsonConvert.DeserializeObject<List<GoogleLatLng>>(jsonResponse["results"].ToString());
 
-            var thisLat = newLatLng[0].Geometry.Location.Lat.ToString();
-            var thisLng = newLatLng[0].Geometry.Location.Lng.ToString();
+            if(newLatLng.Count == 0)
+            {
+                var noLocation = new Location();
+                return noLocation;     
+            } else
+            {
+                var thisLat = newLatLng[0].Geometry.Location.Lat.ToString();
+                var thisLng = newLatLng[0].Geometry.Location.Lng.ToString();
 
-            thisLocation.Latitude = thisLat;
-            thisLocation.Longitude = thisLng;
-            Debug.WriteLine(thisLocation);
+                thisLocation.Latitude = thisLat;
+                thisLocation.Longitude = thisLng;
+                Debug.WriteLine(thisLocation);
 
-            return thisLocation;
+                return thisLocation;
+            }
+
+            
         }
 
         public static Task<IRestResponse> GetResponseContentAsync(RestClient theClient, RestRequest theRequest)

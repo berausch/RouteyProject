@@ -77,7 +77,8 @@
                 });
             }
         });
-        $("#newErrand").submit(function(event){
+        $("#newErrand").submit(function (event) {
+            $("#noResultErrand").hide();
             event.preventDefault();
             $.ajax({
                 type: 'GET',
@@ -123,7 +124,8 @@
                 });
             }
         });
-        $("#newDest").submit(function(event){
+        $("#newDest").submit(function (event) {
+            $("#noResultDest").hide();
             event.preventDefault();
             $.ajax({
                 type: 'GET',
@@ -154,6 +156,7 @@
                         $("#newOrigin").hide();
                         $("#originCard").show();
                         $("#destQ").show();
+                        $("#noResult").hide();
                         $('#origin').html(resultStringOrigin);
                     }
 
@@ -316,7 +319,7 @@
         </div>
     </div>
 
-    <div id="noResult">No Results...</div>
+    <div id="noResult"><br /><h5>No Results...</h5></div>
     <div id="log"></div>
     <div class="row">
         <div class="col s6 m6" id="originCard">

@@ -227,7 +227,7 @@ namespace Routey.Controllers
             string locationType = "OD"; 
             var newLocation = GoogleLatLng.GetLatLng(originAddress, originCity, originState);
 
-            if(newLocation == null)
+            if(newLocation.Address == null)
             {
                 return Json(false);
             } else
