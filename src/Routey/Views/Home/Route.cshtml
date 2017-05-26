@@ -210,8 +210,10 @@
 
 
 
+
+
 <div class="container">
-    
+
     <img class="logo" src="~/img/Routey Logo2.png" alt="Routey Logo" />
     <hr />
     <br />
@@ -241,12 +243,12 @@
     </div>
     <form id="destQ">
         <h4>What's your Destination?</h4>
-        
-        <input class="radio" type="radio" name="dest" value="OD" id="radio1"checked />
+
+        <input class="radio" type="radio" name="dest" value="OD" id="radio1" checked />
         <label for="radio1">Same as Start</label>
-        <input class="radio" type="radio" name="dest" value="D" id="radio2"/>
+        <input class="radio" type="radio" name="dest" value="D" id="radio2" />
         <label for="radio2">Different then Start</label>
-        <input class="radio" type="radio" name="dest" value="W" id="radio3"/>
+        <input class="radio" type="radio" name="dest" value="W" id="radio3" />
         <label for="radio3">Not sure/Doesn't Matter</label>
         <br />
         <br />
@@ -293,7 +295,7 @@
     <div class="ui-widget">
         <form id="newErrand">
             <label for="auto">Add a Stop!</label>
-            <input id="auto" name="auto"> 
+            <input id="auto" name="auto">
             <div id="noResultErrand">
                 <label for="radius">Search Distance (miles)</label>
                 <select name="radius" id="radius">
@@ -305,9 +307,9 @@
                 </select>
                 <button class="submitAddress" type="submit">Submit</button>
             </div>
-</form>
+        </form>
     </div>
-    <div class="preloader-wrapper big active"  id="loaderErrand">
+    <div class="preloader-wrapper big active" id="loaderErrand">
         <div class="spinner-layer spinner-blue-only">
             <div class="circle-clipper left">
                 <div class="circle"></div>
@@ -323,8 +325,8 @@
     <div id="log"></div>
     <div class="row">
         <div class="col s6 m6" id="originCard">
-            <div class="card cardOriginDestBackground" >
-                <div class="card-content cardOriginDestText" >
+            <div class="card cardOriginDestBackground">
+                <div class="card-content cardOriginDestText">
                     <span class="card-title">Start</span>
                     <div id="origin">
                     </div>
@@ -343,18 +345,23 @@
     </div>
     <div id="originDest"></div>
     <div id="route">
-    <hr />
-    <h5>Locations: </h5>
-        <div id="errandAppend"  class="row">
+        <hr />
+        <h5>Locations: </h5>
+        <div id="errandAppend" class="row">
         </div>
     </div>
     <div id="test"></div>
     <div id="done">
         Done with your route?
         <form id="endRoute">
-        <button  type="submit">Create your Link!</button>
-        </form>    
+            <button type="submit">Create your Link!</button>
+        </form>
         <div id="mapLink"></div>
     </div>
 
- </div>
+
+
+    
+</div>
+
+

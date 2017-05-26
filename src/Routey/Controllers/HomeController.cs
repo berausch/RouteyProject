@@ -27,6 +27,11 @@ namespace Routey.Controllers
             return View();
         }
 
+        public IActionResult Map()
+        {
+            return PartialView();
+        }
+
         public IActionResult NoResult()
         {
             return View();
@@ -68,6 +73,8 @@ namespace Routey.Controllers
             var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && (p.LocationType == "OD" || p.LocationType == "O"));
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
+            ViewBag.originLat = originLatitiude;
+            ViewBag.originLng = originLongitude;
             var allLocations = new List<Location>();
             if (radiusInt > 40000)
             {

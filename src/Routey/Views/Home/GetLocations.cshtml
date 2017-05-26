@@ -5,7 +5,7 @@
         $("#modal1").dialog({
             resizable: true,
             height: 600,
-            width: 500,
+            width: 900,
             modal: true,
             close: function () {
                 $(this).dialog("destroy");
@@ -31,30 +31,49 @@
         });
     });
 </script>
+<script>
+                var map;
+                function initMap() {
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        center: { lat: @ViewBag.originLat, lng: @ViewBag.originLng },
+                        zoom: 8
+                    });
+                }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBniQDIBB4eoG7DLjs29N0Hm2bZRiJJrVA&callback=initMap"
+        async defer></script>
 <hr />
 <div id="modal1">
+        <div class="row">
+            <div class="col s4 m6">
+                @foreach (var Place in Model)
+                {
+                    @if (Place.Name != "Address")
+                    {
+                        <p>@Html.DisplayFor(modelItem => Place.Name)</p>
 
-        @foreach (var Place in Model)
-        {
-             @if (Place.Name != "Address")
-             {
-                <p>@Html.DisplayFor(modelItem => Place.Name)</p>
+                    }
+                    <p>@Html.DisplayFor(modelItem => Place.Address)</p>
+                    <p>@Html.DisplayFor(modelItem => Place.City), @Html.DisplayFor(modelItem => Place.State) @Html.DisplayFor(modelItem => Place.Zip)</p>
+                    <form class="addThisLocation">
+                        <input type="hidden" name="name" value="@Place.Name" />
+                        <input type="hidden" name="address" value="@Place.Address" />
+                        <input type="hidden" name="city" value="@Place.City" />
+                        <input type="hidden" name="state" value="@Place.State" />
+                        <input type="hidden" name="zip" value="@Place.Zip" />
+                        <input type="hidden" name="latitude" value="@Place.Latitude" />
+                        <input type="hidden" name="longitude" value="@Place.Longitude" />
+                        <input type="hidden" name="locationType" value="@Place.LocationType" />
+                        <button type="submit">Add Me!</button>
+                    </form>
 
-             }
-            <p>@Html.DisplayFor(modelItem => Place.Address)</p>
-            <p>@Html.DisplayFor(modelItem => Place.City), @Html.DisplayFor(modelItem => Place.State) @Html.DisplayFor(modelItem => Place.Zip)</p>
-            <form class="addThisLocation">
-                <input type="hidden" name="name" value="@Place.Name" />
-                <input type="hidden" name="address" value="@Place.Address" />
-                <input type="hidden" name="city" value="@Place.City" />
-                <input type="hidden" name="state" value="@Place.State" />
-                <input type="hidden" name="zip" value="@Place.Zip" />
-                <input type="hidden" name="latitude" value="@Place.Latitude" />
-                <input type="hidden" name="longitude" value="@Place.Longitude" />
-                <input type="hidden" name="locationType" value="@Place.LocationType" />
-                <button type="submit">Add Me!</button>
-            </form>
+                }
+            </div>
+            <div class="col s8 m6">
+                <div id="map"></div>
 
-        }
- </div>
+            </div>
+        </div>
+</div>
+
 
