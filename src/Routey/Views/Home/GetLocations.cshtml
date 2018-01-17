@@ -21,7 +21,6 @@
                 data: $(this).serialize(),
                 url: '@Url.Action("AddLocation")',
                 success: function (result) {
-                    console.log(result);
                     $('#modal1').dialog('destroy');
                     $("#log").hide();
                     $("#route").show();

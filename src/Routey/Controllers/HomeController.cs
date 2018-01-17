@@ -14,7 +14,7 @@ namespace Routey.Controllers
 {
     public static class GlobalRoute
     {
-       public static int RouteId { get; set; }
+        public static int RouteId { get; set; }
     }
 
     public class HomeController : Controller
@@ -295,7 +295,7 @@ namespace Routey.Controllers
                 mapLink = mapLink + "/" + origin.AddressConcat + "/" + waypointsString + "/"+destination.AddressConcat;
             }
             
-            return Json(mapLink);
+              return Json(mapLink);
         }
 
         //public IActionResult GetGeoLocation(string lat, string lon)
