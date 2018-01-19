@@ -6,6 +6,7 @@
 @model Routey.Models.Route
 <script>
     $(document).ready(function () {
+        console.log("The Original Route Id Is =" + @ViewBag.checkRouteId);
         $(".ui-widget").hide();
         $("#route").hide();
         $("#done").hide();

@@ -30,12 +30,12 @@ namespace Routey
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddMvc();
-            services.AddMemoryCache();
+            services.AddDistributedMemoryCache();
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
-                options.CookieName = ".MyApplication";
+                options.Cookie.HttpOnly = true;
             });
             services.Configure<MvcOptions>(options =>
             {

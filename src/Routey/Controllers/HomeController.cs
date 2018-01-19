@@ -12,6 +12,7 @@ using System.Diagnostics;
 
 namespace Routey.Controllers
 {
+ 
     public static class GlobalRoute
     {
         public static int RouteId { get; set; }
@@ -19,7 +20,7 @@ namespace Routey.Controllers
 
     public class HomeController : Controller
     {
-
+        const string sessionRouteId = "_routeId";
 
         private ApplicationDbContext db = new ApplicationDbContext();
         public IActionResult Index()
@@ -186,7 +187,8 @@ namespace Routey.Controllers
             db.Locations.Add(newLocation);
             db.SaveChanges();
 
- 
+            ViewBag.checkRouteId2 = HttpContext.Session.GetInt32(sessionRouteId);
+
 
             return PartialView(newLocation);
         }
@@ -225,6 +227,11 @@ namespace Routey.Controllers
 
             GlobalRoute.RouteId = newRoute.RouteId;
             var checkGlobal = GlobalRoute.RouteId;
+
+            Debug.WriteLine("Frog");
+            HttpContext.Session.SetInt32(sessionRouteId, newRoute.RouteId);
+            ViewBag.checkRouteId = newRoute.RouteId;
+            
             return View(newRoute);
         }
 
