@@ -13,10 +13,6 @@ using System.Diagnostics;
 namespace Routey.Controllers
 {
  
-    public static class GlobalRoute
-    {
-        public static int RouteId { get; set; }
-    }
 
     public class HomeController : Controller
     {
@@ -40,8 +36,10 @@ namespace Routey.Controllers
 
         public IActionResult DestinationQ(string dest)
         {
+            var RouteIdIntNull = HttpContext.Session.GetInt32(sessionRouteId);
+            var RouteId = RouteIdIntNull.GetValueOrDefault();
 
-            var thisRoute = db.Routes.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId);
+            var thisRoute = db.Routes.FirstOrDefault(p => p.RouteId == RouteId);
             thisRoute.DestinationType = dest;
             db.Entry(thisRoute).State = EntityState.Modified;
             db.SaveChanges();
@@ -57,6 +55,8 @@ namespace Routey.Controllers
 
         public IActionResult GetLocations(string auto, string radius)
         {
+            var RouteIdIntNull = HttpContext.Session.GetInt32(sessionRouteId);
+            var RouteId = RouteIdIntNull.GetValueOrDefault();
             var locationType = "W";
             Debug.WriteLine(radius);
 
@@ -71,7 +71,7 @@ namespace Routey.Controllers
 
             Debug.WriteLine(radiusInt);
 
-            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && (p.LocationType == "OD" || p.LocationType == "O"));
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == RouteId && (p.LocationType == "OD" || p.LocationType == "O"));
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
             ViewBag.originLat = originLatitiude;
@@ -108,6 +108,8 @@ namespace Routey.Controllers
 
         public IActionResult GetLocationsDest(string autoDest, string radiusDest)
         {
+            var RouteIdIntNull = HttpContext.Session.GetInt32(sessionRouteId);
+            var RouteId = RouteIdIntNull.GetValueOrDefault();
 
             Debug.WriteLine(radiusDest);
             var locationType = "D";
@@ -123,7 +125,7 @@ namespace Routey.Controllers
 
             Debug.WriteLine(radiusInt);
 
-            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && (p.LocationType == "OD" || p.LocationType == "O"));
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == RouteId && (p.LocationType == "OD" || p.LocationType == "O"));
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
             var allLocations = new List<Location>();
@@ -159,6 +161,8 @@ namespace Routey.Controllers
 
         public IActionResult AddLocation(string name, string address, string city, string state, string zip, string latitude, string longitude, string locationType)
         {
+            var RouteIdIntNull = HttpContext.Session.GetInt32(sessionRouteId);
+            var RouteId = RouteIdIntNull.GetValueOrDefault();
             string thisLocationType = "";
             if(locationType == null)
             {
@@ -173,21 +177,21 @@ namespace Routey.Controllers
                 {
                     name = "Destination";
                 }
-                var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
+                var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == RouteId && p.LocationType == "OD");
                 thisPlace.LocationType = "O";
                 db.Entry(thisPlace).State = EntityState.Modified;
                 db.SaveChanges();
             }
              
 
-            Location newLocation = new Location(name, address, city, state, zip, latitude, longitude, thisLocationType, GlobalRoute.RouteId);
+            Location newLocation = new Location(name, address, city, state, zip, latitude, longitude, thisLocationType, RouteId);
             newLocation.ApiAddress();
             newLocation.ApiName();
             Debug.WriteLine(newLocation);
             db.Locations.Add(newLocation);
             db.SaveChanges();
 
-            ViewBag.checkRouteId2 = HttpContext.Session.GetInt32(sessionRouteId);
+            ViewBag.checkRouteId2 = RouteId;
 
 
             return PartialView(newLocation);
@@ -196,7 +200,9 @@ namespace Routey.Controllers
 
         public IActionResult GetAuto(string term)
        {
-            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && (p.LocationType == "OD" || p.LocationType == "O"));
+            var RouteIdIntNull = HttpContext.Session.GetInt32(sessionRouteId);
+            var RouteId = RouteIdIntNull.GetValueOrDefault();
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == RouteId && (p.LocationType == "OD" || p.LocationType == "O"));
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
             var allAutoBiz = YelpAuto.GetAutocompleteBusinesses(term, originLatitiude, originLongitude);
@@ -211,7 +217,9 @@ namespace Routey.Controllers
 
         public IActionResult GetAddressAuto(string term)
         {
-            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && (p.LocationType == "OD" || p.LocationType == "O"));
+            var RouteIdIntNull = HttpContext.Session.GetInt32(sessionRouteId);
+            var RouteId = RouteIdIntNull.GetValueOrDefault();
+            var thisPlace = db.Locations.FirstOrDefault(p => p.RouteId == RouteId && (p.LocationType == "OD" || p.LocationType == "O"));
             var originLatitiude = thisPlace.Latitude;
             var originLongitude = thisPlace.Longitude;
             var allAuto = GoogleAuto.GetGoogleAddressAuto(term, originLatitiude, originLongitude);
@@ -225,10 +233,7 @@ namespace Routey.Controllers
             db.Routes.Add(newRoute);
             db.SaveChanges();
 
-            GlobalRoute.RouteId = newRoute.RouteId;
-            var checkGlobal = GlobalRoute.RouteId;
 
-            Debug.WriteLine("Frog");
             HttpContext.Session.SetInt32(sessionRouteId, newRoute.RouteId);
             ViewBag.checkRouteId = newRoute.RouteId;
             
@@ -237,7 +242,8 @@ namespace Routey.Controllers
 
         public IActionResult CreateNewOrigin(string originAddress, string originCity, string originState)
         {
-            
+            var RouteIdIntNull = HttpContext.Session.GetInt32(sessionRouteId);
+            var RouteId = RouteIdIntNull.GetValueOrDefault();
             string locationType = "OD"; 
             var newLocation = GoogleLatLng.GetLatLng(originAddress, originCity, originState);
 
@@ -247,7 +253,7 @@ namespace Routey.Controllers
             } else
             {
                 newLocation.LocationType = locationType;
-                newLocation.RouteId = GlobalRoute.RouteId;
+                newLocation.RouteId = RouteId;
                 newLocation.Name = "Origin";
                 newLocation.ApiName();
                 db.SaveChanges();
@@ -262,21 +268,23 @@ namespace Routey.Controllers
 
         public IActionResult EndRoute()
         {
+            var RouteIdIntNull = HttpContext.Session.GetInt32(sessionRouteId);
+            var RouteId = RouteIdIntNull.GetValueOrDefault();
             var mapLink = "https://www.google.com/maps/dir";
-            var thisRoute = db.Routes.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId);
+            var thisRoute = db.Routes.FirstOrDefault(p => p.RouteId == RouteId);
             var origin = new Location();
             var destination = new Location();
             var waypoints = new List<Location>();
             if (thisRoute.DestinationType == "OD" || thisRoute.DestinationType == "W")
             {
-                origin = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "OD");
+                origin = db.Locations.FirstOrDefault(p => p.RouteId == RouteId && p.LocationType == "OD");
                 destination = origin;
-                waypoints = db.Locations.Where(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "W").ToList();
+                waypoints = db.Locations.Where(p => p.RouteId == RouteId && p.LocationType == "W").ToList();
             } else
             {
-                origin = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "O");
-                destination = db.Locations.FirstOrDefault(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "D");
-                waypoints = db.Locations.Where(p => p.RouteId == GlobalRoute.RouteId && p.LocationType == "W").ToList();
+                origin = db.Locations.FirstOrDefault(p => p.RouteId == RouteId && p.LocationType == "O");
+                destination = db.Locations.FirstOrDefault(p => p.RouteId == RouteId && p.LocationType == "D");
+                waypoints = db.Locations.Where(p => p.RouteId == RouteId && p.LocationType == "W").ToList();
             }
 
             var optimizedOrder = GoogleOptimize.GetGoogleOrder(origin, destination, waypoints);
