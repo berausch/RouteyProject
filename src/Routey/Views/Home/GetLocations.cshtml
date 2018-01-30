@@ -39,6 +39,7 @@
             center: { lat: @ViewBag.originLat, lng: @ViewBag.originLng },
             zoom: 8
         });
+        bounds = new google.maps.LatLngBounds();
 
         for (var i = 0; i < errandLocations.length; i++) {
             var latitude = parseFloat(errandLocations[i].latitude);
@@ -50,7 +51,10 @@
                 map: map,
                 label: thisLabel.toString()
             });
+            loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+            bounds.extend(loc);
         }
+        map.fitBounds(bounds);  
     }
 
    
