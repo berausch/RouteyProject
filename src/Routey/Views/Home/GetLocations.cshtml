@@ -41,16 +41,30 @@
         });
         bounds = new google.maps.LatLngBounds();
 
+        
+
         for (var i = 0; i < errandLocations.length; i++) {
             var latitude = parseFloat(errandLocations[i].latitude);
             var longitude = parseFloat(errandLocations[i].longitude);
             var thisLabel = i + 1;
-            console.log(thisLabel + ": " + latitude + ", " + longitude)
+            console.log(thisLabel + ": " + latitude + ", " + longitude);
+            var contentString = '<h4>' + thisLabel + '</h4><h5>' + errandLocations[i].name+'</h5><p>' + errandLocations[i].address + '</p><p>' + errandLocations[i].city + ', ' + errandLocations[i].state + ' ' + errandLocations[i].zip + '</p>' ;
+            
+            infoWindow = new google.maps.InfoWindow({ content: contentString });
             var marker = new google.maps.Marker({
                 position: { lat: latitude, lng: longitude },
                 map: map,
-                label: thisLabel.toString()
+                label: thisLabel.toString(),
+                info: contentString
             });
+            
+            
+
+            google.maps.event.addListener(marker, 'click', function () {
+                infoWindow.setContent(this.info);
+                infoWindow.open(map, this);
+            });
+
             loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
             bounds.extend(loc);
         }
